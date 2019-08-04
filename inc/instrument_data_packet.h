@@ -1,3 +1,5 @@
+// TODO: Use protos instead of struct for data packet (conv. for communication)
+
 // File: instrument_data_packet.h
 // Purpose: Define instrument-specific data format
 #ifndef instrument_data_packet_h

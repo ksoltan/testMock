@@ -1,14 +1,14 @@
-// file: data_publisher.h
+// file: cloud_publisher.h
 // Purpose: Batch/queue augmented data and push to mesh network
 //          for publishing to cloud
-#ifndef data_publisher_h
-#define data_publisher_h
+#ifndef cloud_publisher_h
+#define cloud_publisher_h
 
 #include <vector>
 
-class DataPublisher(){
+class CloudPublisher {
 public:
-  DataPublisher(int);
+  CloudPublisher(int);
   boolean setup();
   boolean addDataToBatch(String dataStr);
   boolean publishDataBatch();
@@ -18,4 +18,4 @@ private:
   std::vector<String> batchedData; // to save the data strings to while not publishing
 }
 
-#endif // data_publisher_h
+#endif // cloud_publisher_h
