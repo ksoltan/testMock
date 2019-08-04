@@ -14,9 +14,7 @@ public:
     String filename_format;
     String data_headers;
   }
-
   SDCardWriter(Batcher*, const Options&);
-
   int WriteIfReady(); // Write batch only if enough packets have been batched
 
 private:
