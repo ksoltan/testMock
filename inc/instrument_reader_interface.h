@@ -1,10 +1,6 @@
-// TODO: - name change: InstrumentReader
-//       - optional Options :)
-
-// file: instrument_ raw_data_aquirer
-// Purpose: Get raw data string from instrument at a specified rate
-
-// This is instrument specific implementation (such as modbus).
+/** File: instrument_ raw_data_aquirer
+    Purpose: Get raw data packet from instrument when queried
+**/
 
 #ifndef instrument_reader_interface_h
 #define instrument_reader_interface_h
@@ -14,8 +10,8 @@
 class InstrumentReaderInterface {
 public:
   InstrumentReaderInterface();
-  int Connect(); // returns modbus status code
-  InstrumentDataPacket GetData();
+  virtual ~InstrumentReaderInterface();
+  virtual InstrumentDataPacket GetData();
 }
 
 #endif // instrument_reader_interface_h
