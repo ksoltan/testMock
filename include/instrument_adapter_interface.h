@@ -18,8 +18,7 @@ public:
   InstrumentAdapterInterface(std::unique_ptr<InstrumentRawDataAquirer>,
                     std::unique_ptr<InstrumentRawDataParser>);
   virtual ~InstrumentAdapter();
-  virtual int ReadData() = 0; // Read data off of instrument, save internally, and return response code
-  virtual DataPacket GetFormattedDataPacket() = 0; // Return internally saved data for annotation
+  virtual DataPacket GetDataFromInstrument() = 0; // Read data off of instrument and return a formatted DataPacket
 
 private:
   std::unique_ptr<InstrumentReaderInterface> reader; // Communcate with instrument
