@@ -2,15 +2,17 @@
     Using main file to understand where objects are being initialized.
     -> Not all of the necessary inits and includes have been written!
 **/
-
+#include "application.h" // Required to use Particle libraries
 #include "data_packet.h"
-std::unique_ptr<InstrumentReader> reader();
-std::unique_ptr<InstrumentDataFormatter> formatter();
-std::unique_ptr<InstrumentAdapter> adapter(reader, formatter);
 
-std::unique_ptr<Batcher> batcher;
-std::unique_ptr<SDCardWriter> sd_writer(batcher);
-std::unique_ptr<CloudPublisher> publisher(batcher);
+std::unique_ptr<InstrumentReader> reader;
+std::unique_ptr<InstrumentDataFormatter> formatter;
+std::unique_ptr<InstrumentAdapter> instrument_adapter; // (reader, formatter);
+
+std::unique_ptr<DataProcessor> data_processor;
+std::unique_ptr<Outputter> outputter;
+std::unique_ptr<SDCardWriter> sd_writer;
+std::unique_ptr<CloudPublisher> publisher;
 
 enum State{
   READ_DATA,
@@ -25,18 +27,24 @@ void read_data() {
 int data_read_rate_s = 1;
 Timer timer(data_read_rate_s * 1000, read_data);
 
-void setup(){
+void setup() {
   state = WAIT;
+  reader = new InstrumentReader();
+  formatter = new InstrumentDataFormatter();
+  adapter = new InstrumentAdapter(reader, formatter);
+  data_processor = new DataProcessor();
+
   timer.start();
 }
 
 void loop(){
   if(state == READ_DATA){
-    adapter.ReadData();
-    DataPacket annotated_data = annotater.Annotate();
-    batcher.AddToBatch(annotated_data);
-    sd_writer.WriteIfReady();
-    publisher.PublishIfReady();
+     // Error logging is take care of within this class. If you get an empty packet,
+     // then something went wrong here.
+    DataPacket packet = instrument_adapter.GetDataFromInstrument();
+    if(packet){
+      data_processor.ProcessPacket(packet);
+    }
     state = WAIT; // Reset and wait for next timer-triggered state change
   }
 }
