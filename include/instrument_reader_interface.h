@@ -1,5 +1,5 @@
 /** File: instrument_ raw_data_aquirer
-    Purpose: Get raw data packet from instrument when queried
+ *  Purpose: Get raw data packet from instrument when queried
 **/
 
 #ifndef instrument_reader_interface_h

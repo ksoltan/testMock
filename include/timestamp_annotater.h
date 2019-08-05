@@ -1,5 +1,5 @@
 /** File: timestamp_annotater.h
-    Purpose: Add  timestamp to a Data Packet
+ *  Purpose: Add  timestamp to a Data Packet
 **/
 
 #ifndef timestamp_annotater_h

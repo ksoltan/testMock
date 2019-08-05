@@ -1,5 +1,5 @@
 /** File: outputter.h
-    Purpose: Output an annotated data packet to all of the writers.
+ *  Purpose: Output an annotated data packet to all of the writers.
 **/
 
 #ifndef outputter_h

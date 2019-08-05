@@ -1,5 +1,5 @@
 /** File: sd_card_writer.h
-    Purpose: Write batch of data packets to SD card when enough packets have been acquired
+ *  Purpose: Write batch of data packets to SD card when enough packets have been acquired
 **/
 
 #ifndef sd_card_writer_h

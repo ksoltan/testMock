@@ -1,7 +1,7 @@
 /** File: instrument_adapter_interface.h
-    Purpose: Handle interface with an instrument.
-            When prompted, will use the provided Reader and Formatter
-            to poll the instrument and return a formatted data packet.
+ *  Purpose: Handle interface with an instrument.
+ *            When prompted, will use the provided Reader and Formatter
+ *            to poll the instrument and return a formatted data packet.
 **/
 
 #ifndef instrument_adapter_interface_h

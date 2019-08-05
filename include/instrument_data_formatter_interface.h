@@ -1,5 +1,5 @@
 /** File: instrument_data_formatter_interface.h
-    Purpose: Parse raw data (InstrumentDataPacket) into DataPacket format
+ *  Purpose: Parse raw data (InstrumentDataPacket) into DataPacket format
 **/
 
 #ifndef instrument_data_formatter_interface_h

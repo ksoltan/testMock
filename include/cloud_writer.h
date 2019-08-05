@@ -1,6 +1,6 @@
 /** File: cloud_writer.h
-    Purpose: Publish data packet batches to the cloud when
-              enough packets have been acquired.
+ *  Purpose: Publish data packet batches to the cloud when
+ *            enough packets have been acquired.
 **/
 
 #ifndef cloud_writer_h
