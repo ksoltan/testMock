@@ -6,6 +6,7 @@
 #define sd_card_writer_h
 
 #include "SDFat.h"
+#include <vector>
 
 class SDCardWriter {
 public:
@@ -14,11 +15,11 @@ public:
     String filename_format;
     String data_headers;
   }
-  SDCardWriter(Batcher*, const Options&);
-  int WriteIfReady(); // Write batch only if enough packets have been batched
+  SDCardWriter(const Options&);
+  void AddDataPacket(DataPacket); // Add data packet to batch
 
 private:
-  Batcher* batcher;
+  std::vector<DataPacket> data_packet_batch;
   String filename;
 
 }
