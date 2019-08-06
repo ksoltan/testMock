@@ -12,6 +12,6 @@ public:
   InstrumentReaderInterface();
   virtual ~InstrumentReaderInterface();
   virtual InstrumentDataPacket GetData();
-}
+};
 
 #endif // instrument_reader_interface_h

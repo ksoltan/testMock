@@ -2,14 +2,16 @@
 #define data_processor_impl_h
 
 #include "data_processor_interface.h"
+#include "annotater_interface.h"
+#include "outputter_interface.h"
 
-class DataProcessorImpl : public DataProcessorInterface {
-  public:
-    DataProcessorInterface(std::unique_ptr<DataAnnotater>, std::unique_ptr<Outputter>);
-    void ProcessPacket(const DataPacket&); // TODO: Make distinct RawDataPacket // Assume packet exists.
+class DataProcessorImpl : DataProcessorInterface {
+public:
+  DataProcessorInterface(std::unique_ptr<AnnotaterInterface>, std::unique_ptr<OutputterInterface>);
+  virtual void ProcessPacket(const DataPacket&) = 0; // TODO: Make distinct RawDataPacket // Assume packet exists.
 
-  private:
-    DataAnnotater annotater;
-    Outputter outputter;
-}
+private:
+  AnnotaterInterface annotater;
+  OutputterInterface outputter;
+};
 #endif // data_processor_impl_h

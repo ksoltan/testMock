@@ -16,6 +16,6 @@ public:
 private:
   SDCardWriter sd_writer;
   CloudWriter cloud_writer;
-}
+};
 
 #endif // outputter_impl_h

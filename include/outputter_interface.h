@@ -13,10 +13,10 @@
 #include "outputter_interface.h"
 #include "sd_card_writer.h"
 
-class Outputter : public OutputterInterface {
+class OutputterInterface {
 public:
-  Outputter(std::unique_ptr<SDCardWriter>, std::unique_ptr<CloudWriter>);
-  void Output(const DataPacket&);
-}
+  OutputterInterface(std::unique_ptr<SDCardWriter>, std::unique_ptr<CloudWriter>);
+  virtual void Output(const DataPacket&) = 0;
+};
 
 #endif // outputter_interface_h

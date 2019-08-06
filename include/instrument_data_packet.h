@@ -6,6 +6,7 @@
 #ifndef instrument_data_packet_h
 #define instrument_data_packet_h
 
-typedef String InstrumentDataPacket; // TODO(@ksoltan): CHANGE TO APPROPRIATE DATA TYPE
+#include <string>
+typedef std::string InstrumentDataPacket; // TODO(@ksoltan): CHANGE TO APPROPRIATE DATA TYPE
 
 #endif // instrument_data_packet_h

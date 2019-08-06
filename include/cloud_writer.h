@@ -8,19 +8,19 @@
 
 #include <vector>
 
-#include "data_packet"
+#include "data_packet.h"
 
 class CloudWriter {
 public:
   struct Options {
     int num_packets_per_batch;
-  }
+  };
   CloudWriter(const Options&);
   void AddDataPacket(const DataPacket&); // Add to batch
 
 private:
   std::vector<DataPacket> data_packet_batch;
   int Write(); // Publish a batch of data packets when enough have accumulated
-}
+};
 
 #endif // cloud_publisher_h

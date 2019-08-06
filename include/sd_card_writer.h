@@ -5,23 +5,23 @@
 #ifndef sd_card_writer_h
 #define sd_card_writer_h
 
-#include "SDFat.h"
+// #include "SDFat.h"
 #include <vector>
-
+#include <string>
 class SDCardWriter {
 public:
   struct Options {
     int num_packets_per_batch;
-    String filename_format;
-    String data_headers;
-  }
+    std::string filename_format;
+    std::string data_headers;
+  };
   SDCardWriter(const Options&);
   void AddDataPacket(const DataPacket&); // Add data packet to batch
 
 private:
   std::vector<DataPacket> data_packet_batch; // Make copies of datapackets internally so that when they go out of scope, you still have them.
-  String filename;
+  std::string filename;
 
-}
+};
 
 #endif // sd_card_writer_h

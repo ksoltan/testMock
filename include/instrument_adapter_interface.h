@@ -24,6 +24,6 @@ private:
   std::unique_ptr<InstrumentReaderInterface> reader; // Communcate with instrument
   std::unique_ptr<InstrumentDataFormatterInterface> formatter; // Format string into standard form
 
-}
+};
 
 #endif // instrument_adapter_interface_h

@@ -13,6 +13,6 @@ public:
   InstrumentDataFormatterInterface();
   virtual ~InstrumentDataFormatterInterface();
   virtual DataPacket Format(const InstrumentDataPacket&); // pass by reference
-}
+};
 
 #endif // instrument_data_formatter_interface_h
