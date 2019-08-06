@@ -5,10 +5,13 @@
 #ifndef sd_card_writer_h
 #define sd_card_writer_h
 
-// #include "SDFat.h"
 #include <vector>
 #include <string>
-class SDCardWriter {
+
+// #include "SDFat.h"
+#include "writer_interface.h"
+
+class SDCardWriter : public WriterInterface {
 public:
   struct Options {
     int num_packets_per_batch;
@@ -16,6 +19,7 @@ public:
     std::string data_headers;
   };
   SDCardWriter(const Options&);
+  virtual ~SDCardWriter(){};
   void AddDataPacket(const DataPacket&); // Add data packet to batch
 
 private:

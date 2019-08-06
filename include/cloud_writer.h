@@ -6,16 +6,15 @@
 #ifndef cloud_writer_h
 #define cloud_writer_h
 
-#include <vector>
+#include "writer_interface"
 
-#include "data_packet.h"
-
-class CloudWriter {
+class CloudWriter : WriterInterface {
 public:
   struct Options {
     int num_packets_per_batch;
   };
   CloudWriter(const Options&);
+  virtual ~CloudWriter(){};
   void AddDataPacket(const DataPacket&); // Add to batch
 
 private:

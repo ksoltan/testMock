@@ -8,16 +8,17 @@
 #include <memory>
 #include <vector>
 
-#include "cloud_writer.h"
 #include "data_packet.h"
 #include "outputter_interface.h"
-#include "sd_card_writer.h"
+#include "writer_interface.h"
 
 class OutputterInterface {
 public:
-  OutputterInterface(std::unique_ptr<SDCardWriter>, std::unique_ptr<CloudWriter>);
+  OutputterInterface(){};
   virtual ~OutputterInterface(){};
-  virtual void Output(const DataPacket&){};
+  // Because passing around a vector of WriterInterfaces seemed maybe not great? Although, I can't imagine we'll have more than 2 writers.
+  virtual void AddWriter(std::unique_ptr<WriterInterface>) = 0;
+  virtual void Output(const DataPacket&) = 0;
 };
 
 #endif // outputter_interface_h

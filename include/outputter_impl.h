@@ -5,17 +5,18 @@
 #ifndef outputter_impl_h
 #define outputter_impl_h
 
-// #include <memory>
 #include "outputter_interface.h"
 
-class Outputter : public OutputterInterface {
+class OutputterImpl : public OutputterInterface {
 public:
-  Outputter(std::unique_ptr<SDCardWriter>, std::unique_ptr<CloudWriter>);
+  OutputterImpl(){};
+  ~OutputterImpl(){};
+  void AddWriter(std::unique_ptr<WriterInterface>);
   void Output(const DataPacket&);
+  int GetNumWriters();
 
 private:
-  SDCardWriter sd_writer;
-  CloudWriter cloud_writer;
+  std::vector<std::unique_ptr<WriterInterface>> writer_ptrs;
 };
 
 #endif // outputter_impl_h
