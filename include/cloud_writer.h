@@ -16,7 +16,7 @@ public:
     int num_packets_per_batch;
   }
   CloudWriter(const Options&);
-  void AddDataPacket(DataPacket); // Add to batch
+  void AddDataPacket(const DataPacket&); // Add to batch
 
 private:
   std::vector<DataPacket> data_packet_batch;

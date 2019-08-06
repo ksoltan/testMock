@@ -16,10 +16,10 @@ public:
     String data_headers;
   }
   SDCardWriter(const Options&);
-  void AddDataPacket(DataPacket); // Add data packet to batch
+  void AddDataPacket(const DataPacket&); // Add data packet to batch
 
 private:
-  std::vector<DataPacket> data_packet_batch;
+  std::vector<DataPacket> data_packet_batch; // Make copies of datapackets internally so that when they go out of scope, you still have them.
   String filename;
 
 }

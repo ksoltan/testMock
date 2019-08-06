@@ -41,9 +41,9 @@ void loop(){
   if(state == READ_DATA){
      // Error logging is take care of within this class. If you get an empty packet,
      // then something went wrong here.
-    DataPacket packet = instrument_adapter.GetDataFromInstrument();
+    const DataPacket raw_packet = instrument_adapter.GetDataFromInstrument(); // TODO: Make RawDataPacket class
     if(packet){
-      data_processor.ProcessPacket(packet);
+      data_processor.ProcessPacket(raw_packet);
     }
     state = WAIT; // Reset and wait for next timer-triggered state change
   }

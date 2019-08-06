@@ -14,10 +14,6 @@
 class DataProcessorInterface {
   public:
     DataProcessorInterface(std::unique_ptr<DataAnnotater>, std::unique_ptr<Outputter>);
-    void ProcessPacket(DataPacket);
-
-  private:
-    DataAnnotater annotater;
-    Outputter outputter;
+    virtual void ProcessPacket(const DataPacket&) = 0; // TODO: Make distinct RawDataPacket // Assume packet exists.
 }
 #endif // data_processor_interface_h

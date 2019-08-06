@@ -16,7 +16,7 @@
 class TimestampAnnotater : public AnnotaterInterface {
 public:
   TimestampAnnotater();
-  DataPacket Annotate(DataPacket); // Add timestamp to data packet
+  DataPacket Annotate(const DataPacket& /*raw_packet*/); // Add timestamp to data packet
 }
 
 #endif // timestamp_annotater_h
