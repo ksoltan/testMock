@@ -11,6 +11,7 @@
 class AnnotaterInterface {
   public:
     AnnotaterInterface();
-    virtual DataPacket Annotate(const DataPacket& /*raw_packet*/); // Return new annotated DataPacket
+    virtual ~AnnotaterInterface(){};
+    virtual DataPacket Annotate(const DataPacket& /*raw_packet*/){return NULL;}; // Return new annotated DataPacket
 };
 #endif // annotater_interface_h

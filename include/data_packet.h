@@ -9,8 +9,8 @@
 #ifndef data_packet_h
 #define data_packet_h
 
-class DataPacket {
-  DataPacket();
-};
+#include <string>
+
+typedef std::string DataPacket;
 
 #endif // data_packet_h

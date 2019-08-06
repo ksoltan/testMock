@@ -13,7 +13,9 @@
 
 class DataProcessorInterface {
   public:
-    DataProcessorInterface(std::unique_ptr<AnnotaterInterface>, std::unique_ptr<OutputterInterface>);
+    DataProcessorInterface(){}; // Default ctor since derived (impls) shouldn't be passing its unique_ptr to the base (interface)
+    DataProcessorInterface(std::unique_ptr<AnnotaterInterface>, std::unique_ptr<OutputterInterface>){}
+    ~DataProcessorInterface(){};
     virtual void ProcessPacket(const DataPacket&) = 0; // TODO: Make distinct RawDataPacket // Assume packet exists.
 };
 #endif // data_processor_interface_h

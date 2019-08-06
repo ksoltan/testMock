@@ -16,7 +16,8 @@
 class OutputterInterface {
 public:
   OutputterInterface(std::unique_ptr<SDCardWriter>, std::unique_ptr<CloudWriter>);
-  virtual void Output(const DataPacket&) = 0;
+  virtual ~OutputterInterface(){};
+  virtual void Output(const DataPacket&){};
 };
 
 #endif // outputter_interface_h

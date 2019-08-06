@@ -7,11 +7,12 @@
 
 class DataProcessorImpl : DataProcessorInterface {
 public:
-  DataProcessorInterface(std::unique_ptr<AnnotaterInterface>, std::unique_ptr<OutputterInterface>);
-  virtual void ProcessPacket(const DataPacket&) = 0; // TODO: Make distinct RawDataPacket // Assume packet exists.
+  DataProcessorImpl(std::unique_ptr<AnnotaterInterface>, std::unique_ptr<OutputterInterface>);
+  ~DataProcessorImpl(){};
+  void ProcessPacket(const DataPacket&); // TODO: Make distinct RawDataPacket // Assume packet exists.
 
 private:
-  AnnotaterInterface annotater;
-  OutputterInterface outputter;
+  std::unique_ptr<AnnotaterInterface> annotater_ptr;
+  std::unique_ptr<OutputterInterface> outputter_ptr;
 };
 #endif // data_processor_impl_h
