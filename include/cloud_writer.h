@@ -14,7 +14,6 @@ public:
     int num_packets_per_batch;
   };
   CloudWriter(const Options&);
-  virtual ~CloudWriter(){};
   void AddDataPacket(const DataPacket&); // Add to batch
 
 private:

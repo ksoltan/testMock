@@ -14,8 +14,7 @@
 
 class OutputterInterface {
 public:
-  OutputterInterface(){};
-  virtual ~OutputterInterface(){};
+  virtual ~OutputterInterface(){}; // for mocking
   // Because passing around a vector of WriterInterfaces seemed maybe not great? Although, I can't imagine we'll have more than 2 writers.
   virtual void AddWriter(std::unique_ptr<WriterInterface>) = 0;
   virtual void Output(const DataPacket&) = 0;

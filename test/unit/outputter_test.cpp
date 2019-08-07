@@ -43,7 +43,8 @@ SCENARIO("Outputter distributes annotated packet to list of writers successfully
       REQUIRE(outputter.GetNumWriters() == 3);
 
       THEN("Outputter will output a DataPacket to all three writers"){
-        const DataPacket& annotated_packet = "annotated";
+        DataPacket annotated_packet;
+        annotated_packet.timestamp = "timestamp";
         outputter.Output(annotated_packet);
 
         // Verify: annotated packet was added to both writers

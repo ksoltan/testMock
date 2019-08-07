@@ -14,49 +14,69 @@
 #include "data_processor_impl.h"
 #include "outputter_interface.h"
 
-SCENARIO("DataProcessor processes packet properly by annotating and outputting it"){
-  GIVEN("Annotater and Outputter which return successfully"){
-    // Create mock annotater that returns a data packet with metadata.
-    // We check if the annotater gets called with the correct raw data packet.
-    // How to pass mock as unique_ptr: https://github.com/eranpeer/FakeIt/issues/10
-    fakeit::Mock<AnnotaterInterface> mock_annotater;
-    fakeit::Fake(Dtor(mock_annotater)); // Stub the dtor to do nothing!!
-    DataPacket annotated_packet = "annotated";
-    fakeit::When(Method(mock_annotater, Annotate)).Return(annotated_packet); // return once
-    AnnotaterInterface * annotater = &mock_annotater.get();
+SCENARIO("DataProcessor processes packet"){
+GIVEN("A mock outputter and annotater"){
+  // Create a mock annotater without expectations (no definition for Annotate method)
+  fakeit::Mock<AnnotaterInterface> mock_annotater;
+  fakeit::Fake(Dtor(mock_annotater)); // Stub the dtor to do nothing!!
+  AnnotaterInterface * annotater = &mock_annotater.get();
+  std::unique_ptr<AnnotaterInterface> a_ptr(annotater);
+  // Create a mock outputter that acts just as a placeholder.
+  fakeit::Mock<OutputterInterface> mock_outputter;
+  fakeit::Fake(Dtor(mock_outputter)); // Stub the dtor to do nothing!!
+  fakeit::When(Method(mock_outputter, Output)).Return(); // do nothing
+  OutputterInterface * outputter = &mock_outputter.get();
+  std::unique_ptr<OutputterInterface> o_ptr(outputter);
+  // Initialize DataProcessor with mock annotater and outputter
+  DataProcessorImpl data_processor(std::move(a_ptr), std::move(o_ptr));
 
-    // Create a mock outputter that acts just as a placeholder.
-    // We check if the outputter was called with the annotated data packet
-    // that the mock annotater returns.
-    fakeit::Mock<OutputterInterface> mock_outputter;
-    fakeit::Fake(Dtor(mock_outputter)); // Stub the dtor to do nothing!!
-    fakeit::When(Method(mock_outputter, Output)).Return(); // do nothing
-    OutputterInterface * outputter = &mock_outputter.get();
+  WHEN("DataProcessor receives a data packet with data"){
+    DataPacket raw_packet;
+    raw_packet.data = "some data";
 
-    // Initialize the class-under-test (DataProcessorImpl)
-    std::unique_ptr<AnnotaterInterface> a_ptr(annotater);
-    std::unique_ptr<OutputterInterface> o_ptr(outputter);
-    DataProcessorImpl dp(std::move(a_ptr), std::move(o_ptr)); // Annotater, Outputter
+    DataPacket annotated_packet;
+    annotated_packet.data = raw_packet.data; // in case we change raw data above
+    annotated_packet.timestamp = "timestamp";
+    fakeit::When(Method(mock_annotater, Annotate)).Return(annotated_packet);
+    data_processor.ProcessPacket(raw_packet);
 
-    WHEN("the DataProcessor gets a DataPacket to process"){
-      // Call function under test with a raw packet to process
-      const DataPacket& raw_packet = "raw";
-
-      THEN("it outputs an annotated DataPacket"){
-        dp.ProcessPacket(raw_packet);
-        // Verify: Annotate method was called with the raw data packet exactly once
-        fakeit::Verify(Method(mock_annotater, Annotate).Using(raw_packet)).Exactly(1);
-
-        // Verify: Outputter was called with the annotated Data Packet arg, also called once.
-        // The first verify call below succeeds. The second one below (with Using()) fails.
-        // Possible because fakeit does not handle const refs: https://github.com/eranpeer/FakeIt/issues/31
-        // Both verifications work if Output's arg is changes to a DataPacket pointer.
-        fakeit::Verify(Method(mock_outputter, Output)).Exactly(1);
-        // fakeit::Verify(Method(mock_outputter, Output).Using(annotated_packet)).Exactly(1);        
-      }
+    THEN("the packet is annotated and outputted"){
+      // Annotator should not be called on empty packet
+      fakeit::Verify(Method(mock_annotater, Annotate).Using(raw_packet)).Exactly(1);
+      // Outputter should be called
+      // TODO(@ksoltan) Verify use of AnnotatedPacket
+      // The first verify call below succeeds. The second one below (with Using()) fails.
+      // Possible because fakeit does not handle const refs: https://github.com/eranpeer/FakeIt/issues/31
+      // Both verifications work if Output's arg is changes to a DataPacket pointer.
+      fakeit::Verify(Method(mock_outputter, Output)).Exactly(1);
+      // fakeit::Verify(Method(mock_outputter, Output).Using(annotated_packet)).Exactly(1);
     }
   }
 
+  WHEN("DataProcessor receives an empty packet to annotate"){
+    // Define annotater function to add timestamp
+    DataPacket annotated_packet;
+    annotated_packet.timestamp = "timestamp";
+    fakeit::When(Method(mock_annotater, Annotate)).Return(annotated_packet);
 
+    DataPacket empty_packet;
+    data_processor.ProcessPacket(empty_packet);
 
+    THEN("the packet is still annotated and outputted"){
+      // Annotator should not be called on empty packet
+      fakeit::Verify(Method(mock_annotater, Annotate).Using(empty_packet)).Exactly(1);
+      // Outputter should be called
+      fakeit::Verify(Method(mock_outputter, Output)).Exactly(1);
+    }
+  }
+
+  // This should not happen because we wil tests Annotater.
+  // Assume that annotater returns an annotated packet
+  // WHEN("DataProcessor's Annotater does not add a timestamp"){
+  //   THEN("no packet is outputted"){
+  //
+  //   }
+  // }
+
+}
 }

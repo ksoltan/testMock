@@ -9,11 +9,9 @@
 
 class OutputterImpl : public OutputterInterface {
 public:
-  OutputterImpl(){};
-  ~OutputterImpl(){};
   void AddWriter(std::unique_ptr<WriterInterface>);
-  void Output(const DataPacket&);
   int GetNumWriters();
+  void Output(const DataPacket&);
 
 private:
   std::vector<std::unique_ptr<WriterInterface>> writer_ptrs;

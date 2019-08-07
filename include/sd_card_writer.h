@@ -19,7 +19,6 @@ public:
     std::string data_headers;
   };
   SDCardWriter(const Options&);
-  virtual ~SDCardWriter(){};
   void AddDataPacket(const DataPacket&); // Add data packet to batch
 
 private:

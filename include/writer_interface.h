@@ -7,8 +7,7 @@
 
 class WriterInterface {
 public:
-  WriterInterface(){};
-  virtual ~WriterInterface(){};
+  virtual ~WriterInterface(){}; // for mocking
   virtual void AddDataPacket(const DataPacket&){}; // Add packet to batch
 };
 
