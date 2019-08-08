@@ -17,9 +17,12 @@ class OutputterInterface {
 public:
   virtual ~OutputterInterface(){}; // for mocking
   virtual void AddWriter(std::unique_ptr<WriterInterface>) = 0;
+  virtual void AddErrorWriter(std::unique_ptr<WriterInterface>) = 0;
   // Outputting to multiple Writers may result in multiple errors
   virtual std::vector<Status> Output(const DataPacket&) = 0;
-  virtual Status OutputError(const DataPacket&) = 0;
+  // If outputting error, there is no one else to handle it,
+  // so do not return status
+  virtual void OutputError(const DataPacket&) = 0;
 };
 
 #endif // outputter_interface_h

@@ -67,7 +67,7 @@ GIVEN("A mock outputter and annotater"){
     DataPacket error_packet("Write Failed by SD Writer", "timestamp");
     fakeit::When(Method(mock_annotater, Annotate)).Return(annotated_packet, error_packet);
     fakeit::When(Method(mock_outputter, Output).Using(annotated_packet)).Return({Status::WriteFailed("by SD Writer")});
-    fakeit::When(Method(mock_outputter, OutputError).Using(error_packet)).Return(Status::OK());
+    fakeit::When(Method(mock_outputter, OutputError).Using(error_packet)).Return();
 
     data_processor.ProcessPacket(raw_packet);
 
@@ -90,8 +90,8 @@ GIVEN("A mock outputter and annotater"){
     fakeit::When(Method(mock_outputter, Output).Using(annotated_packet)).Return({
                                     Status::WriteFailed("by SD Writer"),
                                     Status::WriteFailed("by Cloud Writer")});
-    fakeit::When(Method(mock_outputter, OutputError).Using(error_packet1)).Return(Status::OK());
-    fakeit::When(Method(mock_outputter, OutputError).Using(error_packet2)).Return(Status::OK());
+    fakeit::When(Method(mock_outputter, OutputError).Using(error_packet1)).Return();
+    fakeit::When(Method(mock_outputter, OutputError).Using(error_packet2)).Return();
 
     data_processor.ProcessPacket(raw_packet);
 
@@ -102,22 +102,6 @@ GIVEN("A mock outputter and annotater"){
       fakeit::Verify(Method(mock_outputter, OutputError)).Exactly(2);
     }
   }
-  WHEN("DataProcessor receives WRITE_FAILED status from outputting error msg"){
-    DataPacket raw_packet("some data"); // empty packet
-    DataPacket annotated_packet("some data", "timestamp");
-    DataPacket error_packet("Write Failed by SD Writer", "timestamp");
-    fakeit::When(Method(mock_annotater, Annotate)).Return(annotated_packet, error_packet);
-    fakeit::When(Method(mock_outputter, Output).Using(annotated_packet)).Return({Status::WriteFailed("by SD Writer")});
-    // Change OutputError to return an error as compared to the When statement above
-    fakeit::When(Method(mock_outputter, OutputError).Using(error_packet)).Return(Status::WriteFailed());
 
-    data_processor.ProcessPacket(raw_packet);
-
-    THEN("it does not take additional action"){
-      fakeit::Verify(Method(mock_annotater, Annotate)).Exactly(2);
-      fakeit::Verify(Method(mock_outputter, Output)).Exactly(1);
-      fakeit::Verify(Method(mock_outputter, OutputError)).Exactly(1);
-    }
-  }
 }
 }

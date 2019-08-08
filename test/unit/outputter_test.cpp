@@ -34,8 +34,9 @@ GIVEN("Some mock Writers"){
 
   WHEN("no Writers are added"){
     OutputterImpl outputter;
-    THEN("return 0 total Writers"){
+    THEN("return 0 total Writers and 0 total error Writers"){
       REQUIRE(outputter.GetNumWriters() == 0);
+      REQUIRE(outputter.GetNumErrorWriters() == 0);
     }
   }
 
@@ -56,6 +57,16 @@ GIVEN("Some mock Writers"){
     THEN("return 3 total Writers"){
       // Check that writers were added.
       REQUIRE(outputter.GetNumWriters() == 3);
+    }
+  }
+
+  WHEN("three Writers added as error Writers"){
+    OutputterImpl outputter;
+    outputter.AddErrorWriter(std::move(writer_1_ptr));
+    outputter.AddErrorWriter(std::move(writer_2_ptr));
+    outputter.AddErrorWriter(std::move(writer_3_ptr));
+    THEN("return 3 total error Writers"){
+      REQUIRE(outputter.GetNumErrorWriters() == 3);
     }
   }
 }
@@ -129,6 +140,42 @@ GIVEN("Two mock Writers"){
       fakeit::Verify(Method(mock_writer_2, AddDataPacket)).Exactly(1);
       std::vector<Status> expected_errors = {Status::WriteFailed(), Status::WriteFailed()};
       REQUIRE(errors == expected_errors);
+    }
+  }
+}
+}
+
+SCENARIO("Outputter distributes error packets to error writers successfully"){
+GIVEN("Two mock error Writers"){
+  // Initialize three WriterInterfaces
+  fakeit::Mock<WriterInterface> mock_writer_1;
+  fakeit::Fake(Dtor(mock_writer_1));
+  WriterInterface * writer_1 = &mock_writer_1.get();
+
+  fakeit::Mock<WriterInterface> mock_writer_2;
+  fakeit::Fake(Dtor(mock_writer_2));
+  WriterInterface * writer_2 = &mock_writer_2.get();
+
+  std::unique_ptr<WriterInterface> writer_1_ptr(writer_1);
+  std::unique_ptr<WriterInterface> writer_2_ptr(writer_2);
+
+  OutputterImpl outputter;
+  // Add the error writers
+  outputter.AddErrorWriter(std::move(writer_1_ptr));
+  outputter.AddErrorWriter(std::move(writer_2_ptr));
+  
+  WHEN("outputter outputs error packet"){
+    DataPacket error_packet("Write Failed by SD Card", "timestamp");
+
+    fakeit::When(Method(mock_writer_1, AddDataPacket).Using(error_packet)).Return(Status::OK());
+    fakeit::When(Method(mock_writer_2, AddDataPacket).Using(error_packet)).Return(Status::OK());
+
+    outputter.OutputError(error_packet);
+
+    THEN("all error writers add the packet"){
+      // Verify: annotated packet was added to both writers
+      fakeit::Verify(Method(mock_writer_1, AddDataPacket)).Exactly(1);
+      fakeit::Verify(Method(mock_writer_2, AddDataPacket)).Exactly(1);
     }
   }
 }
