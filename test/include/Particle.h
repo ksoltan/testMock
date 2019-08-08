@@ -33,6 +33,12 @@ public:
     return published_data_.at(idx);
   }
 
+  // Call everytime you finish using FakeParticle in a test case.
+  void Reset(){
+    ResetPublishedData();
+    ResetPublishReturnFlags();
+  }
+
   void ResetPublishedData(){
     published_data_.clear();
   }
@@ -47,6 +53,7 @@ private:
   std::vector<bool> publish_return_flags_;
   std::vector<String> published_data_;
 };
-extern FakeParticle Particle; // To use, declare in one test as FakeParticle Particle;
+// Declared/initialized in test/main.cpp
+extern FakeParticle Particle;
 
 #endif // PARTICLE_H
