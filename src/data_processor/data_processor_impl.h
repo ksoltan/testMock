@@ -1,6 +1,9 @@
-// TODO: Change header guards to capital
-#ifndef data_processor_impl_h
-#define data_processor_impl_h
+/** File: data_processor_impl.h
+ *  Purpose: Handle annotating packets, outputting them, and outputting any errors
+ **/
+
+#ifndef DATA_PROCESSOR_IMPL_H
+#define DATA_PROCESSOR_IMPL_H
 
 #include <memory>
 #include <vector>
@@ -19,7 +22,7 @@ public:
 private:
   // If you want to add multiple annotaters, change to a std::vector of AnnotaterInterfaces
   // and loop through each one, calling its Annotate function
-  std::unique_ptr<AnnotaterInterface> annotater;
-  std::unique_ptr<OutputterInterface> outputter;
+  std::unique_ptr<AnnotaterInterface> annotater_;
+  std::unique_ptr<OutputterInterface> outputter_;
 };
-#endif // data_processor_impl_h
+#endif // DATA_PROCESSOR_IMPL_H

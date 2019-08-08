@@ -3,10 +3,10 @@
  *
  *  TODO: Use protos for more efficiency, readibility, and mutability
 **/
-#ifndef instrument_data_packet_h
-#define instrument_data_packet_h
+#ifndef INSTRUMENT_DATA_PACKET_H
+#define INSTRUMENT_DATA_PACKET_H
 
 #include <string>
 typedef std::string InstrumentDataPacket; // TODO(@ksoltan): CHANGE TO APPROPRIATE DATA TYPE
 
-#endif // instrument_data_packet_h
+#endif // INSTRUMENT_DATA_PACKET_H

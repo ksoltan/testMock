@@ -2,8 +2,8 @@
  *  Purpose: Process one data packet
 **/
 
-#ifndef data_processor_interface_h
-#define data_processor_interface_h
+#ifndef DATA_PROCESSOR_INTERFACE_H
+#define DATA_PROCESSOR_INTERFACE_H
 
 #include "../common/data_packet.h"
 #include "../common/status.h"
@@ -14,4 +14,4 @@ class DataProcessorInterface {
     virtual void ProcessPacket(const DataPacket&) = 0;
     virtual void ProcessErrors(const std::vector<Status> &) = 0;
 };
-#endif // data_processor_interface_h
+#endif // DATA_PROCESSOR_INTERFACE_H

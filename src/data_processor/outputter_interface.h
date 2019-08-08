@@ -2,8 +2,8 @@
  *  Purpose: Output an annotated data packet to all of the writers.
 **/
 
-#ifndef outputter_interface_h
-#define outputter_interface_h
+#ifndef OUTPUTTER_INTERFACE_H
+#define OUTPUTTER_INTERFACE_H
 
 #include <memory>
 #include <vector>
@@ -25,4 +25,4 @@ public:
   virtual void OutputError(const DataPacket&) = 0;
 };
 
-#endif // outputter_interface_h
+#endif // OUTPUTTER_INTERFACE_H

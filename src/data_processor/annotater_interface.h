@@ -3,8 +3,8 @@
  *
 **/
 
-#ifndef annotater_interface_h
-#define annotater_interface_h
+#ifndef ANNOTATER_INTERFACE_H
+#define ANNOTATER_INTERFACE_H
 
 #include "../common/data_packet.h"
 
@@ -13,4 +13,4 @@ class AnnotaterInterface {
     virtual ~AnnotaterInterface(){}; // for mocking
     virtual DataPacket Annotate(const DataPacket& /*raw_packet*/)=0; // Return new annotated DataPacket
 };
-#endif // annotater_interface_h
+#endif // ANNOTATER_INTERFACE_H

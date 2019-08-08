@@ -4,8 +4,8 @@
  *            to poll the instrument and return a formatted data packet.
 **/
 
-#ifndef instrument_adapter_interface_h
-#define instrument_adapter_intnerface_h
+#ifndef INSTRUMENT_ADAPTER_INTERFACE_H
+#define INSTRUMENT_ADAPTER_INTERFACE_H
 
 #include <memory>
 
@@ -21,9 +21,9 @@ public:
   virtual DataPacket GetDataFromInstrument() = 0; // Read data off of instrument and return a formatted DataPacket
 
 private:
-  std::unique_ptr<InstrumentReaderInterface> reader; // Communcate with instrument
-  std::unique_ptr<InstrumentDataFormatterInterface> formatter; // Format string into standard form
+  std::unique_ptr<InstrumentReaderInterface> reader_; // Communcate with instrument
+  std::unique_ptr<InstrumentDataFormatterInterface> formatter_; // Format string into standard form
 
 };
 
-#endif // instrument_adapter_interface_h
+#endif // INSTRUMENT_ADAPTER_INTERFACE_H

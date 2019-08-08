@@ -3,8 +3,8 @@
  *            enough packets have been acquired.
 **/
 
-#ifndef cloud_writer_h
-#define cloud_writer_h
+#ifndef CLOUD_WRITER_H
+#define CLOUD_WRITER_H
 
 #include "writer_interface"
 
@@ -17,8 +17,8 @@ public:
   Status AddDataPacket(const DataPacket&); // Add to batch
 
 private:
-  std::vector<DataPacket> data_packet_batch;
+  std::vector<DataPacket> data_packet_batch_;
   int Write(); // Publish a batch of data packets when enough have accumulated
 };
 
-#endif // cloud_publisher_h
+#endif // CLOUD_WRITER_H

@@ -2,8 +2,8 @@
  *  Purpose: Parse raw data (InstrumentDataPacket) into DataPacket format
 **/
 
-#ifndef instrument_data_formatter_interface_h
-#define instrument_data_formatter_interface_h
+#ifndef INSTRUMENT_DATA_FORMATTER_INTERFACE_H
+#define INSTRUMENT_DATA_FORMATTER_INTERFACE_H
 
 #include "../common/data_packet.h"
 
@@ -14,4 +14,4 @@ public:
   virtual DataPacket Format(const InstrumentDataPacket&); // pass by reference
 };
 
-#endif // instrument_data_formatter_interface_h
+#endif // INSTRUMENT_DATA_FORMATTER_INTERFACE_H

@@ -2,8 +2,8 @@
  *  Purpose: Output an annotated data packet to all of the writers.
 **/
 
-#ifndef outputter_impl_h
-#define outputter_impl_h
+#ifndef OUTPUTTER_IMPL_H
+#define OUTPUTTER_IMPL_H
 
 #include "outputter_interface.h"
 
@@ -17,8 +17,8 @@ public:
   void OutputError(const DataPacket&);
 
 private:
-  std::vector<std::unique_ptr<WriterInterface>> writers;
-  std::vector<std::unique_ptr<WriterInterface>> error_writers;
+  std::vector<std::unique_ptr<WriterInterface>> writers_;
+  std::vector<std::unique_ptr<WriterInterface>> error_writers_;
 };
 
-#endif // outputter_impl_h
+#endif // OUTPUTTER_IMPL_H

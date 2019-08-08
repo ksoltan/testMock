@@ -2,8 +2,8 @@
  *  Purpose: Get raw data packet from instrument when queried
 **/
 
-#ifndef instrument_reader_interface_h
-#define instrument_reader_interface_h
+#ifndef INSTRUMENT_READER_INTERFACE_H
+#define INSTRUMENT_READER_INTERFACE_H
 
 #include "../common/data_packet.h"
 
@@ -14,4 +14,4 @@ public:
   virtual InstrumentDataPacket GetData();
 };
 
-#endif // instrument_reader_interface_h
+#endif // INSTRUMENT_READER_INTERFACE_H
