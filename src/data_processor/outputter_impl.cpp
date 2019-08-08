@@ -1,4 +1,5 @@
 #include "outputter_impl.h"
+
 void OutputterImpl::AddWriter(std::unique_ptr<WriterInterface> writer){
   writers.push_back(std::move(writer));
   return;

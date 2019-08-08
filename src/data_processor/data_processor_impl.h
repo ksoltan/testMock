@@ -19,7 +19,7 @@ public:
 private:
   // If you want to add multiple annotaters, change to a std::vector of AnnotaterInterfaces
   // and loop through each one, calling its Annotate function
-  std::unique_ptr<AnnotaterInterface> annotater_ptr;
-  std::unique_ptr<OutputterInterface> outputter_ptr;
+  std::unique_ptr<AnnotaterInterface> annotater;
+  std::unique_ptr<OutputterInterface> outputter;
 };
 #endif // data_processor_impl_h
