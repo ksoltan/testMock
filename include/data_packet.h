@@ -11,8 +11,14 @@
 #include "Particle.h" // Required for String library def
 
 struct DataPacket {
-  String timestamp;
   String data;
+  String timestamp;
+
+  DataPacket(const DataPacket& other) = default;
+  DataPacket& operator=(const DataPacket& other) = default;
+
+  DataPacket(const String& data = "", const String& timestamp = "")
+      : data(data), timestamp(timestamp) {}
 
   // // Return comma separated string with metadata fields first, followed by data
   // String ToString();

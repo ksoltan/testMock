@@ -1,16 +1,24 @@
 #include "outputter_impl.h"
-
 void OutputterImpl::AddWriter(std::unique_ptr<WriterInterface> writer){
-  writer_ptrs.push_back(std::move(writer));
+  writers.push_back(std::move(writer));
   return;
 }
 
 int OutputterImpl::GetNumWriters(){
-  return writer_ptrs.size();
+  return writers.size();
 }
 
-void OutputterImpl::Output(const DataPacket& annotated_packet){
-  for(auto const& writer : writer_ptrs){
+std::vector<Status> OutputterImpl::Output(const DataPacket& annotated_packet){
+  std::vector<Status> errors;
+  for(auto const& writer : writers){
     writer->AddDataPacket(annotated_packet);
   }
+  return errors;
+}
+
+Status OutputterImpl::OutputError(const DataPacket& error_packet){
+  for(auto const& error_writer : error_writers){
+    error_writer->AddDataPacket(error_packet);
+  }
+  return Status::OK();
 }

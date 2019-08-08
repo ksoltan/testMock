@@ -15,6 +15,7 @@ INCLUDE  := -I include/ 									\
 SRC      := $(wildcard *.cpp)							\
 						$(wildcard unit/*.cpp)	\
 						$(wildcard ../src/*.cpp)		\
+						$(wildcard ../src/common/*.cpp)		\
 
 # OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 OBJECTS := $(patsubst %.c,%.o,$(SRC))

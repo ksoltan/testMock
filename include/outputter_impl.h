@@ -11,10 +11,12 @@ class OutputterImpl : public OutputterInterface {
 public:
   void AddWriter(std::unique_ptr<WriterInterface>);
   int GetNumWriters();
-  void Output(const DataPacket&);
+  std::vector<Status> Output(const DataPacket&);
+  Status OutputError(const DataPacket&);
 
 private:
-  std::vector<std::unique_ptr<WriterInterface>> writer_ptrs;
+  std::vector<std::unique_ptr<WriterInterface>> writers;
+  std::vector<std::unique_ptr<WriterInterface>> error_writers;
 };
 
 #endif // outputter_impl_h
