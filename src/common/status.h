@@ -14,11 +14,16 @@ struct Status {
   Status(StatusCode code, const String& msg = "")
       : code(code), msg(msg) {}
 
+  bool operator==(const Status& other) const{
+    return code == other.code && msg == other.msg;
+  }
+
+
   static Status OK(){return Status(StatusCode::OK);}
 
   static Status WriteFailed(const String& msg = ""){
-    return Status(StatusCode::WRITE_FAILED,
-                  "Write failed" + msg);}
+    return Status(StatusCode::WRITE_FAILED, "Write failed" + msg);
+  }
 
   bool NotOK(){return code != StatusCode::OK;}
 };

@@ -12,7 +12,10 @@ int OutputterImpl::GetNumWriters(){
 std::vector<Status> OutputterImpl::Output(const DataPacket& annotated_packet){
   std::vector<Status> errors;
   for(auto const& writer : writers){
-    writer->AddDataPacket(annotated_packet);
+    Status status = writer->AddDataPacket(annotated_packet);
+    if(status.NotOK()){
+      errors.push_back(status);
+    }
   }
   return errors;
 }

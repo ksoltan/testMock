@@ -19,7 +19,7 @@ public:
     std::string data_headers;
   };
   SDCardWriter(const Options&);
-  void AddDataPacket(const DataPacket&); // Add data packet to batch
+  Status AddDataPacket(const DataPacket&); // Add data packet to batch
 
 private:
   std::vector<DataPacket> data_packet_batch; // Make copies of datapackets internally so that when they go out of scope, you still have them.
