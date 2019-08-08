@@ -10,12 +10,15 @@ APP_DIR  := $(BUILD)
 TARGET   := allTests
 
 INCLUDE  := -I include/ 									\
- 						-I ../include/							\
+						-I ../src/common/		\
+						-I ../src/data_processor/		\
+						# -I ../src/instrument_adapter		\
 
 SRC      := $(wildcard *.cpp)							\
 						$(wildcard unit/*.cpp)	\
-						$(wildcard ../src/*.cpp)		\
 						$(wildcard ../src/common/*.cpp)		\
+						$(wildcard ../src/data_processor/*.cpp)		\
+						# $(wildcard ../src/instrument_adapter/*.cpp)		\
 
 # OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 OBJECTS := $(patsubst %.c,%.o,$(SRC))

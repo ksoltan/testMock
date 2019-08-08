@@ -5,8 +5,7 @@
 #ifndef instrument_data_formatter_interface_h
 #define instrument_data_formatter_interface_h
 
-#include "data_packet.h"
-#include "instrument_data_packet.h"
+#include "../common/data_packet.h"
 
 class InstrumentDataFormatterInterface {
 public:

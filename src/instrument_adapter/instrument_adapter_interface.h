@@ -9,7 +9,7 @@
 
 #include <memory>
 
-#include "data_packet.h"
+#include "../common/data_packet.h"
 #include "instrument_reader_interface.h"
 #include "instrument_data_formatter.h"
 

@@ -1,4 +1,4 @@
-/** File: data_packet.h
+/** File: common/data_packet.h
  *  Purpose: Declare data packet used by Annotater and Batcher to store
  *            and write data.
  *

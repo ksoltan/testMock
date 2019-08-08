@@ -1,4 +1,4 @@
-/** File: instrument_data_packet.h
+/** File: instrument_common/data_packet.h
  *  Purpose: Define instrument-specific data format
  *
  *  TODO: Use protos for more efficiency, readibility, and mutability

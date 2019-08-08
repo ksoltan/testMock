@@ -5,7 +5,7 @@
 #ifndef instrument_reader_interface_h
 #define instrument_reader_interface_h
 
-#include "instrument_data_packet.h"
+#include "../common/data_packet.h"
 
 class InstrumentReaderInterface {
 public:

@@ -3,7 +3,7 @@
 //     -> Not all of the necessary inits and includes have been written!
 // **/
 // #include "application.h" // Required to use Particle libraries
-// #include "data_packet.h"
+// #include "common/data_packet.h"
 //
 // std::unique_ptr<InstrumentReader> reader;
 // std::unique_ptr<InstrumentDataFormatter> formatter;

@@ -5,8 +5,8 @@
 #ifndef data_processor_interface_h
 #define data_processor_interface_h
 
-#include "data_packet.h"
-#include "common/status.h"
+#include "../common/data_packet.h"
+#include "../common/status.h"
 
 class DataProcessorInterface {
   public:

@@ -4,6 +4,7 @@
 #ifndef STATUS_H
 #define STATUS_H
 
+#include "Particle.h"
 #include "status_code.h"
 
 struct Status {

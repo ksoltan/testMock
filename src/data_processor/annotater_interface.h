@@ -6,7 +6,7 @@
 #ifndef annotater_interface_h
 #define annotater_interface_h
 
-#include "data_packet.h"
+#include "../common/data_packet.h"
 
 class AnnotaterInterface {
   public:

@@ -8,9 +8,9 @@
 #include <memory>
 #include <vector>
 
-#include "data_packet.h"
+#include "../common/data_packet.h"
 #include "outputter_interface.h"
-#include "common/status.h"
+#include "../common/status.h"
 #include "writer_interface.h"
 
 class OutputterInterface {

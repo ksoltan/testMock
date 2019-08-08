@@ -11,10 +11,10 @@
 #include "fakeit.hpp"
 
 #include "annotater_interface.h"
-#include "data_packet.h"
+#include "../../src/common/data_packet.h"
 #include "data_processor_impl.h"
 #include "outputter_interface.h"
-#include "common/status.h"
+#include "../../src/common/status.h"
 
 SCENARIO("DataProcessor processes packet"){
 GIVEN("A mock outputter and annotater"){
