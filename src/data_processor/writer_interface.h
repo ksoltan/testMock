@@ -6,6 +6,7 @@
 #define WRITER_INTERFACE_H
 
 #include "../common/status.h"
+#include "../common/data_packet.h"
 
 class WriterInterface {
 public:

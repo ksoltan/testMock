@@ -21,8 +21,10 @@ struct DataPacket {
       : data(data), timestamp(timestamp) {}
 
   // // Return comma separated string with metadata fields first, followed by data
-  // String ToString();
-  bool operator==(const DataPacket& other) const; // to compare DataPackets in tests
+  String ToString() const {return timestamp + "," + data;};
+  bool operator==(const DataPacket& other) const{
+    return timestamp == other.timestamp && data == other.data;
+  }
 };
 
 #endif // data_packet_h

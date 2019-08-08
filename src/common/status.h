@@ -11,6 +11,7 @@ struct Status {
   StatusCode code;
   String msg; // Optional msg
 
+  Status(){};
   Status(StatusCode code, const String& msg = "")
       : code(code), msg(msg) {}
 

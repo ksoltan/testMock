@@ -1,7 +1,7 @@
 # Makefile for Running Unit Tests
 
 CXX      := g++
-CXXFLAGS := -pedantic-errors -Wall -Wextra #-Werror
+CXXFLAGS := -pedantic-errors -Wall -Wextra -Wno-unused-parameter #-Werror
 LDFLAGS  := -L/usr/lib -lstdc++ -lm
 
 BUILD    := ./build

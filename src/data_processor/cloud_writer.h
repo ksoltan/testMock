@@ -6,7 +6,9 @@
 #ifndef CLOUD_WRITER_H
 #define CLOUD_WRITER_H
 
-#include "writer_interface"
+#include <vector>
+
+#include "writer_interface.h"
 
 class CloudWriter : WriterInterface {
 public:
@@ -14,11 +16,13 @@ public:
     int num_packets_per_batch;
   };
   CloudWriter(const Options&);
-  Status AddDataPacket(const DataPacket&); // Add to batch
+  Status AddDataPacket(const DataPacket&); // Batch and publish if enough
+  int GetNumPacketsInBatch(); // For testing
 
 private:
-  std::vector<DataPacket> data_packet_batch_;
-  int Write(); // Publish a batch of data packets when enough have accumulated
+  Options options_;
+  std::vector<DataPacket> data_packets_;
+  Status Write();
 };
 
 #endif // CLOUD_WRITER_H
