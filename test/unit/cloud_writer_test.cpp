@@ -5,6 +5,7 @@
 #include "cloud_writer.h"
 #include "data_packet.h"
 #include "Particle.h"
+
 FakeParticle Particle;
 
 TEST_CASE("CloudWriter adds packet to batch"){
@@ -12,6 +13,7 @@ TEST_CASE("CloudWriter adds packet to batch"){
   options.num_packets_per_batch = 3;
 
   CloudWriter cloud_writer = CloudWriter(options);
+
   SECTION("No packets have been added"){
     REQUIRE(cloud_writer.GetNumPacketsInBatch() == 0);
   }
@@ -20,13 +22,17 @@ TEST_CASE("CloudWriter adds packet to batch"){
     REQUIRE(cloud_writer.GetNumPacketsInBatch() == 1);
   }
   SECTION("Add three packets and write batch"){
+    Particle.SetPublishReturnFlags({true, true, true});
     cloud_writer.AddDataPacket(DataPacket("some data", "timestamp 1"));
     cloud_writer.AddDataPacket(DataPacket("some more data", "timestamp 2"));
     REQUIRE(cloud_writer.GetNumPacketsInBatch() == 2);
     cloud_writer.AddDataPacket(DataPacket("even more data", "timestamp 3"));
     REQUIRE(cloud_writer.GetNumPacketsInBatch() == 0); // Write and clear data
+    Particle.ResetPublishedData();
+    Particle.ResetPublishReturnFlags();
   }
   SECTION("Add three packets, write batch, and add more packets"){
+    Particle.SetPublishReturnFlags({true, true, true});
     cloud_writer.AddDataPacket(DataPacket("some data", "timestamp 1"));
     cloud_writer.AddDataPacket(DataPacket("some more data", "timestamp 2"));
     cloud_writer.AddDataPacket(DataPacket("even more data", "timestamp 3"));
@@ -34,9 +40,11 @@ TEST_CASE("CloudWriter adds packet to batch"){
     cloud_writer.AddDataPacket(DataPacket("more more data", "timestamp 4"));
     cloud_writer.AddDataPacket(DataPacket("even more more data", "timestamp 5"));
     REQUIRE(cloud_writer.GetNumPacketsInBatch() == 2);
+    Particle.ResetPublishedData();
+    Particle.ResetPublishReturnFlags();
   }
   SECTION("Return OK status"){
-    Particle.SetPublishFlag(true);
+    Particle.SetPublishReturnFlags({true, true, true});
     cloud_writer.AddDataPacket(DataPacket("some data", "timestamp 1"));
     cloud_writer.AddDataPacket(DataPacket("some more data", "timestamp 2"));
     Status status = cloud_writer.AddDataPacket(DataPacket("even more data", "timestamp 3"));
@@ -44,13 +52,18 @@ TEST_CASE("CloudWriter adds packet to batch"){
     REQUIRE(Particle.GetPublishedDataAt(0) == "timestamp 1,some data");
     REQUIRE(Particle.GetPublishedDataAt(1) == "timestamp 2,some more data");
     REQUIRE(Particle.GetPublishedDataAt(2) == "timestamp 3,even more data");
+    Particle.ResetPublishedData();
+    Particle.ResetPublishReturnFlags();
   }
   SECTION("Return NOT OK status"){
-    Particle.SetPublishFlag(false);
+    Particle.SetPublishReturnFlags({false, false, false});
     cloud_writer.AddDataPacket(DataPacket("some data", "timestamp 1"));
     cloud_writer.AddDataPacket(DataPacket("some more data", "timestamp 2"));
     Status status = cloud_writer.AddDataPacket(DataPacket("even more data", "timestamp 3"));
     Status expected_status = Status::WriteFailed("at Cloud Writer with 3/3 packets");
     REQUIRE(status == expected_status);
+
+    Particle.ResetPublishedData();
+    Particle.ResetPublishReturnFlags();
   }
 }

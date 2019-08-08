@@ -17,16 +17,16 @@ enum PublishFlags {
 
 class FakeParticle {
 public:
-	void SetPublishFlag(bool flag){publish_flag_ = flag;} // For testing
+	void SetPublishReturnFlags(std::vector<bool> flags){publish_return_flags_ = flags;} // For testing
   // Example usage from arisense-fw-v18: Particle.Publish("DATA_V18",
   //                                                      BUF_STRINGS.back(),
   //                                                      PRIVATE, WITH_ACK)
-  // Will warn about unused variables.
+  // Set -Wno-unused-parameter flag in Makefile to quiet warnings
   bool Publish(String eventName, String data,
                       PublishFlags=PublishFlags::PRIVATE,
                       PublishFlags=PublishFlags::WITH_ACK){
                         published_data_.push_back(data);
-                        return publish_flag_;
+                        return publish_return_flags_.at(num_call++);
                       }
 
   String GetPublishedDataAt(int idx){
@@ -37,8 +37,14 @@ public:
     published_data_.clear();
   }
 
+  void ResetPublishReturnFlags(){
+    num_call = 0;
+    publish_return_flags_.clear();
+  }
+
 private:
-  bool publish_flag_;
+  int num_call;
+  std::vector<bool> publish_return_flags_;
   std::vector<String> published_data_;
 };
 extern FakeParticle Particle; // To use, declare in one test as FakeParticle Particle;
