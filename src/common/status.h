@@ -30,7 +30,7 @@ struct Status {
     return Status(StatusCode::READ_FAILED, "Read failed" + msg);
   }
 
-  bool NotOK(){return code != StatusCode::OK;}
+  bool NotOK () const{return code != StatusCode::OK;}
 };
 
 #endif // STATUS_H
