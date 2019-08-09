@@ -15,7 +15,7 @@ INCLUDE  := -I include/ 									\
 						# -I ../src/instrument_adapter		\
 
 SRC      := $(wildcard *.cpp)							\
-						$(wildcard unit/*.cpp)	\
+						$(wildcard unit/data_processor/*.cpp)	\
 						$(wildcard ../src/common/*.cpp)		\
 						$(wildcard ../src/data_processor/*.cpp)		\
 						# $(wildcard ../src/instrument_adapter/*.cpp)		\
