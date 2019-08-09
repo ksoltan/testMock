@@ -10,8 +10,7 @@
 
 class DataProcessorInterface {
   public:
-     // TODO: Make distinct RawDataPacket // Assume packet exists.
-    virtual void ProcessPacket(const DataPacket&) = 0;
+    virtual void ProcessPacket(const DataPacket&) = 0; // Assume packet exists.
     virtual void ProcessErrors(const std::vector<Status> &) = 0;
 };
 #endif // DATA_PROCESSOR_INTERFACE_H

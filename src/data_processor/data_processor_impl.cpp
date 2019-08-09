@@ -1,6 +1,5 @@
 #include "data_processor_impl.h"
 
-// TODO: Rename priv vars to blah underscore, change args to func to blach
 DataProcessorImpl::DataProcessorImpl(std::unique_ptr<AnnotaterInterface> annotater, std::unique_ptr<OutputterInterface> outputter){
   annotater_ = std::move(annotater);
   outputter_ = std::move(outputter);

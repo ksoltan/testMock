@@ -1,9 +1,6 @@
 /** File: data_processor_test.h
  *
 **/
-// TODO: How to test Using const ref args
-// TODO: How does it deal with failures. More tests. Does Outputter deal with errors? DataProcessor should handle all errors
-#include <iostream>
 #include <memory>
 #include <vector>
 

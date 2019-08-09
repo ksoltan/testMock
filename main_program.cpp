@@ -41,7 +41,7 @@
 //   if(state == READ_DATA){
 //      // Error logging is take care of within this class. If you get an empty packet,
 //      // then something went wrong here.
-//     const DataPacket raw_packet = instrument_adapter.GetDataFromInstrument(); // TODO: Make RawDataPacket class
+//     const DataPacket raw_packet = instrument_adapter.GetDataFromInstrument();
 //     if(packet){
 //       data_processor.ProcessPacket(raw_packet);
 //     }
