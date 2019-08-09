@@ -3,6 +3,7 @@ Test folder was separated from src to maintain independent compilation and not i
 Contains:
 include/ - unit testing and mock framework headers (catch, fakeit)
           Add Particle functionality mocks (such as String, Publish, etc) to include/Particle.h
+          If you define a fake library class, initialize it in test/main.cpp
 unit/ - unit tests
 
 To run tests, from test/ folder:

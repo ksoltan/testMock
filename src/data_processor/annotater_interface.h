@@ -11,6 +11,6 @@
 class AnnotaterInterface {
   public:
     virtual ~AnnotaterInterface(){}; // for mocking
-    virtual DataPacket Annotate(const DataPacket& /*raw_packet*/)=0; // Return new annotated DataPacket
+    virtual DataPacket Annotate(const DataPacket& /*raw_packet*/) = 0; // Return new annotated DataPacket
 };
 #endif // ANNOTATER_INTERFACE_H
