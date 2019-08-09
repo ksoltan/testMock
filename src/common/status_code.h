@@ -7,6 +7,7 @@
 
 enum StatusCode {
   OK,
+  READ_FAILED,
   WRITE_FAILED
 };
 

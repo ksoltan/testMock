@@ -26,6 +26,10 @@ struct Status {
     return Status(StatusCode::WRITE_FAILED, "Write failed" + msg);
   }
 
+  static Status ReadFailed(const String& msg = ""){
+    return Status(StatusCode::READ_FAILED, "Read failed" + msg);
+  }
+
   bool NotOK(){return code != StatusCode::OK;}
 };
 
