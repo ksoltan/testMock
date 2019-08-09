@@ -12,12 +12,14 @@ TARGET   := allTests
 INCLUDE  := -I include/ 									\
 						-I ../src/common/		\
 						-I ../src/data_processor/		\
-						# -I ../src/instrument_adapter		\
+						-I ../src/instrument_adapter		\
 
 SRC      := $(wildcard *.cpp)							\
 						$(wildcard unit/data_processor/*.cpp)	\
+						$(wildcard unit/instrument_adapter/*.cpp)	\
 						$(wildcard ../src/common/*.cpp)		\
 						$(wildcard ../src/data_processor/*.cpp)		\
+						$(wildcard ../src/instrument_adapter/*.cpp)	\
 						# $(wildcard ../src/instrument_adapter/*.cpp)		\
 
 # OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)

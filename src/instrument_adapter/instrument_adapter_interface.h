@@ -2,28 +2,20 @@
  *  Purpose: Handle interface with an instrument.
  *            When prompted, will use the provided Reader and Formatter
  *            to poll the instrument and return a formatted data packet.
+ *
+ *    Interface file exists in case you need to mock InstrumentAdapter
 **/
 
 #ifndef INSTRUMENT_ADAPTER_INTERFACE_H
 #define INSTRUMENT_ADAPTER_INTERFACE_H
 
-#include <memory>
-
 #include "../common/data_packet.h"
-#include "instrument_reader_interface.h"
-#include "instrument_data_formatter.h"
+#include "../common/packet_with_status.h"
 
 class InstrumentAdapterInterface {
 public:
-  InstrumentAdapterInterface(std::unique_ptr<InstrumentRawDataAquirer>,
-                    std::unique_ptr<InstrumentRawDataParser>);
-  virtual ~InstrumentAdapter();
-  virtual DataPacket GetDataFromInstrument() = 0; // Read data off of instrument and return a formatted DataPacket
-
-private:
-  std::unique_ptr<InstrumentReaderInterface> reader_; // Communcate with instrument
-  std::unique_ptr<InstrumentDataFormatterInterface> formatter_; // Format string into standard form
-
+  virtual ~InstrumentAdapterInterface(){}
+  virtual PacketWithStatus<DataPacket> GetDataFromInstrument() = 0; // Read data off of instrument and return a formatted DataPacket
 };
 
 #endif // INSTRUMENT_ADAPTER_INTERFACE_H

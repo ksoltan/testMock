@@ -16,8 +16,9 @@ class DataProcessorImpl : DataProcessorInterface {
 public:
   DataProcessorImpl(std::unique_ptr<AnnotaterInterface>, std::unique_ptr<OutputterInterface>);
   ~DataProcessorImpl(){};
-  void ProcessPacket(const DataPacket&);
+  void ProcessPacket(const PacketWithStatus<DataPacket>&);
   void ProcessErrors(const std::vector<Status>&);
+  void ProcessError(const Status&);
 
 private:
   // If you want to add multiple annotaters, change to a std::vector of AnnotaterInterfaces
