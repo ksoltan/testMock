@@ -25,11 +25,11 @@
 
 SYSTEM_MODE(MANUAL);
 
-// Instrument Adapter
-std::unique_ptr<InstrumentDataFormatterInterface> data_formatter(new ModbusDataFormatter());
-std::unique_ptr<ModbusReader> reader;
-std::unique_ptr<ModbusMaster> modbus_master;
-std::unique_ptr<InstrumentAdapterImpl> adapter;
+// // Instrument Adapter
+// std::unique_ptr<InstrumentDataFormatterInterface> data_formatter(new ModbusDataFormatter());
+// std::unique_ptr<ModbusReader> reader;
+// std::unique_ptr<ModbusMaster> modbus_master;
+// std::unique_ptr<InstrumentAdapterImpl> adapter;
 
 // Data Processor
 std::unique_ptr<DataProcessorImpl> data_processor;
@@ -58,10 +58,10 @@ Timer timer(data_read_rate_s * 1000, read_data);
 void setup() {
   state = WAIT;
   // Modbus Adapter
-  modbus_master = std::make_unique<ModbusMaster>();
-  reader = std::make_unique<ModbusReader>(std::move(modbus_master)); // Initialize with T400_registers
-  data_formatter = std::make_unique<ModbusDataFormatter>();
-  adapter = std::make_unique<InstrumentAdapterImpl>(std::move(reader), std::move(data_formatter));
+  // modbus_master = std::make_unique<ModbusMaster>();
+  // reader = std::make_unique<ModbusReader>(std::move(modbus_master)); // Initialize with T400_registers
+  // data_formatter = std::make_unique<ModbusDataFormatter>();
+  // adapter = std::make_unique<InstrumentAdapterImpl>(std::move(reader), std::move(data_formatter));
 
   timestamp_annotater = std::make_unique<TimestampAnnotater>();
   outputter = std::make_unique<OutputterImpl>();
@@ -101,7 +101,9 @@ void setup() {
 
 void loop(){
   if(state == READ_DATA){
-    PacketWithStatus<DataPacket> packet = adapter->GetDataFromInstrument();
+    // PacketWithStatus<DataPacket> packet = adapter->GetDataFromInstrument();
+    DataPacket p;
+    PacketWithStatus<DataPacket> packet(p);
     data_processor->ProcessPacket(packet);
     state = WAIT; // Reset and wait for next timer-triggered state change
   }
