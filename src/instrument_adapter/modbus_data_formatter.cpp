@@ -27,23 +27,6 @@ DataPacket ModbusDataFormatter::Format(const RawPacket& raw_packet){
   return formatted_packet;
 }
 
-String ModbusDataFormatter::VectorToString(const std::vector<float>& v){
-  String res;
-  uint8_t idx = 0;
-  for (auto const& elem : v){
-    // Particle String class has function for stringifying float with set precision
-    // Using snprintf because wasn't able to mock String class for unit testing
-    char buf[128];
-    snprintf(buf, sizeof(buf), "%.3f", elem);
-    res += buf;
-    if(idx < v.size() - 1){
-      res += ",";
-    }
-    idx++;
-  }
-  return res;
-}
-
 String ModbusDataFormatter::FormatInputRegisters(
                                           const std::vector<uint16_t>& input_register_vals){
 
@@ -55,6 +38,8 @@ String ModbusDataFormatter::FormatInputRegisters(
     float response = GetFloatFromInt(r0, r1);
 
     char buf[128];
+    // Particle String class has function for stringifying float with set precision
+    // Using snprintf because wasn't able to mock String class for unit testing
     snprintf(buf, sizeof(buf), "%.3f", response); // Format to 3 decimals
     res += buf;
     if(i < input_register_vals.size() - 2){

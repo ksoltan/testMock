@@ -21,8 +21,7 @@ public:
 
 private:
   void SetDiscreteInputFlags(const std::map<int, DiscreteInputFlag>&);
-  String VectorToString(const std::vector<float>&);
-
+  
   float GetFloatFromInt(uint16_t, uint16_t);
   std::vector<DiscreteInputFlag> discrete_input_flags_; // List of addresses of interest
 };
