@@ -33,11 +33,11 @@ const std::vector<int> INPUT_REGISTERS = {
 
 //
 const String SD_FILE_HEADER_STR =
-  "PHSTB"
-  "SLOPE1"
-  "OFSET1"
-  "SMPLFLW"
-  "CONC1"
+  "PHSTB,"
+  "SLOPE1,"
+  "OFSET1,"
+  "SMPLFLW,"
+  "CONC1,"
   "FLAGS"; // Make sure to end with Flags (discrete inputs)
 
 #endif // T400_REGISTERS_H

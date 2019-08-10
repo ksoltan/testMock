@@ -1,5 +1,5 @@
 #include "modbus_reader.h"
-
+#include "Particle.h"
 ModbusReader::ModbusReader(std::unique_ptr<ModbusMasterInterface> modbus_master){
   modbus_master_ = std::move(modbus_master);
   SetInputRegisterRequestParams(INPUT_REGISTERS);
@@ -66,7 +66,9 @@ void ModbusReader::SetInputRegisters(const std::vector<int>& input_registers){
 }
 
 void ModbusReader::SetDiscreteInputs(const std::map<int, DiscreteInputFlag>& discrete_inputs_map){
+  Serial.println("Setting discrete inputs");
   for(auto const& discrete_input : discrete_inputs_map){
+    Serial.printf("%d : %d\n", discrete_input.first, discrete_input.second);
     discrete_inputs_.push_back(discrete_input.first); // Add just the address
   }
 }
