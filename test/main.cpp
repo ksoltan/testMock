@@ -4,3 +4,6 @@
 
 FakeParticle Particle;
 FakeTime Time;
+
+SerialPort Serial;
+SerialPort Serial1;

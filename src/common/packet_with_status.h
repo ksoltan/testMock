@@ -24,7 +24,7 @@ struct PacketWithStatus {
   PacketWithStatus(const Status& status) : status(status) {}
 
   bool operator==(const PacketWithStatus<T>& other) const{
-    return status == status && packet == packet;
+    return status == other.status && packet == other.packet;
   }
 };
 

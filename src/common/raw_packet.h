@@ -1,19 +1,24 @@
 /** File: raw_data_packet.h
- *  Purpose: Define instrument-specific data format
+ *  Purpose: Instrument-specific packet which the Formatter accepts
  *
  *  TODO: Use protos for more efficiency, readibility, and mutability
 **/
-#ifndef RAW_DATA_PACKET_H
-#define RAW_DATA_PACKET_H
+#ifndef RAW_PACKET_H
+#define RAW_PACKET_H
+
+#include <vector>
 
 struct RawPacket {
-  int temperature;
-  String name;
-  String timestamp;
+  std::vector<int> input_register_vals;
+  std::vector<int> discrete_input_vals;
 
-  bool operator==(const RawPacket& other) const{
-    return true; // for testing?
+  RawPacket(std::vector<int> input_vals = {}, std::vector<int> discrete_vals = {})
+      : input_register_vals(input_vals), discrete_input_vals(discrete_vals) {}
+
+  bool operator==(const RawPacket& other) const {
+    return input_register_vals == other.input_register_vals &&
+            discrete_input_vals == other.discrete_input_vals;
   }
 };
 
-#endif // RAW_DATA_PACKET_H
+#endif // RAW_PACKET_H

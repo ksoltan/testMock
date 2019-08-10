@@ -1,4 +1,4 @@
-/** File: instrument_ raw_data_aquirer
+/** File: instrument_reader_interface.h
  *  Purpose: Get raw data packet from instrument when queried
 **/
 
@@ -10,8 +10,7 @@
 
 class InstrumentReaderInterface {
 public:
-  InstrumentReaderInterface();
-  virtual ~InstrumentReaderInterface(){};
+  virtual ~InstrumentReaderInterface(){}; // For mocking
   virtual PacketWithStatus<RawPacket> Read() = 0; // Read data from instrument
 };
 

@@ -1,7 +1,7 @@
 # Makefile for Running Unit Tests
 
 CXX      := g++
-CXXFLAGS := -pedantic-errors -Wall -Wextra -Wno-unused-parameter #-Werror
+CXXFLAGS := -pedantic-errors -Wall -Wextra -Wno-unused-parameter -Wno-return-type #-Werror
 LDFLAGS  := -L/usr/lib -lstdc++ -lm
 
 BUILD    := ./build
@@ -15,12 +15,12 @@ INCLUDE  := -I include/ 									\
 						-I ../src/instrument_adapter		\
 
 SRC      := $(wildcard *.cpp)							\
+						$(wildcard include/*.cpp)			\
 						$(wildcard unit/data_processor/*.cpp)	\
 						$(wildcard unit/instrument_adapter/*.cpp)	\
 						$(wildcard ../src/common/*.cpp)		\
 						$(wildcard ../src/data_processor/*.cpp)		\
 						$(wildcard ../src/instrument_adapter/*.cpp)	\
-						# $(wildcard ../src/instrument_adapter/*.cpp)		\
 
 # OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 OBJECTS := $(patsubst %.c,%.o,$(SRC))

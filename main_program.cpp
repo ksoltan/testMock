@@ -2,7 +2,7 @@
 //     Using main file to understand where objects are being initialized.
 //     -> Not all of the necessary inits and includes have been written!
 // **/
-// #include "application.h" // Required to use Particle libraries
+// #include "Particle.h" // Required to use Particle libraries
 // #include "common/data_packet.h"
 //
 // std::unique_ptr<InstrumentReader> reader;
