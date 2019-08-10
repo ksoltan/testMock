@@ -7,10 +7,10 @@
 #define CLOUD_WRITER_H
 
 #include <vector>
-
+#include "Particle.h"
 #include "writer_interface.h"
 
-class CloudWriter : WriterInterface {
+class CloudWriter : public WriterInterface {
 public:
   struct Options {
     int num_packets_per_batch;

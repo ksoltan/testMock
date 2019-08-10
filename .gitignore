@@ -1,2 +1,4 @@
 # Ignore the build folder
 build/
+#Ignore the bin bolder
+bin/

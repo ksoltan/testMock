@@ -7,7 +7,7 @@
 
 #include "annotater_interface.h"
 
-class TimestampAnnotater : AnnotaterInterface {
+class TimestampAnnotater : public AnnotaterInterface {
 public:
   struct Options {
     // Use Particle's predefined ISO 8601 format string as default

@@ -12,7 +12,7 @@
 #include "annotater_interface.h"
 #include "outputter_interface.h"
 
-class DataProcessorImpl : DataProcessorInterface {
+class DataProcessorImpl : public DataProcessorInterface {
 public:
   DataProcessorImpl(std::unique_ptr<AnnotaterInterface>, std::unique_ptr<OutputterInterface>);
   ~DataProcessorImpl(){};

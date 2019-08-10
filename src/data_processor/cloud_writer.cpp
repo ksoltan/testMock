@@ -21,7 +21,7 @@ Status CloudWriter::Write(){
   // initialize explicitly to prevent undefined behavior: https://stackoverflow.com/a/6032889
   int num_failed = 0;
   for(auto const& packet : data_packets_){
-    bool publish_flag = Particle.Publish(options_.event_name, packet.ToString());
+    bool publish_flag = Particle.publish(options_.event_name, packet.ToString());
     if(!publish_flag){
       num_failed++;
     }
@@ -29,9 +29,14 @@ Status CloudWriter::Write(){
   data_packets_.clear(); // Clear packets
 
   if(num_failed > 0){ // Return number of packets failed in error msg
+    // return Status::WriteFailed(" at Cloud Writer with " + \
+    //                             std::to_string(num_failed) + "/" + \
+    //                             std::to_string(options_.num_packets_per_batch) + \
+    //                             " packets");
+    // FOR PARTICLE COMPILE
     return Status::WriteFailed(" at Cloud Writer with " + \
-                                std::to_string(num_failed) + "/" + \
-                                std::to_string(options_.num_packets_per_batch) + \
+                                String(num_failed) + "/" + \
+                                String(options_.num_packets_per_batch) + \
                                 " packets");
   }
   return Status::OK();

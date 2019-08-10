@@ -13,11 +13,11 @@ enum PublishFlags {
 class FakeParticle {
 public:
 	void SetPublishReturnFlags(std::vector<bool> flags){publish_return_flags_ = flags;} // For testing
-  // Example usage from arisense-fw-v18: Particle.Publish("DATA_V18",
+  // Example usage from arisense-fw-v18: Particle.publish("DATA_V18",
   //                                                      BUF_STRINGS.back(),
   //                                                      PRIVATE, WITH_ACK)
   // Set -Wno-unused-parameter flag in Makefile to quiet warnings
-  bool Publish(String eventName, String data,
+  bool publish(String eventName, String data,
                       PublishFlags=PublishFlags::PRIVATE,
                       PublishFlags=PublishFlags::WITH_ACK){
                         published_data_.push_back(data);

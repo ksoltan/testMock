@@ -13,7 +13,7 @@
 #include "instrument_data_formatter_interface.h"
 #include "instrument_reader_interface.h"
 
-class InstrumentAdapterImpl : InstrumentAdapterInterface {
+class InstrumentAdapterImpl : public InstrumentAdapterInterface {
 public:
   InstrumentAdapterImpl(std::unique_ptr<InstrumentReaderInterface>,
                     std::unique_ptr<InstrumentDataFormatterInterface>);

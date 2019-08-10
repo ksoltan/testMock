@@ -14,7 +14,7 @@
 
 #include "../common/T400_registers.h" // Instrument specific definitions
 
-class ModbusReader : InstrumentReaderInterface {
+class ModbusReader : public InstrumentReaderInterface {
 public:
   ModbusReader(std::unique_ptr<ModbusMasterInterface>);
   // Constructor for testing: passing own DISCRETE_INPUTS and INPUT_REGISTERS

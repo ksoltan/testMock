@@ -10,7 +10,7 @@
 #include "instrument_data_formatter_interface.h"
 #include "../common/T400_registers.h"
 
-class ModbusDataFormatter : InstrumentDataFormatterInterface {
+class ModbusDataFormatter : public InstrumentDataFormatterInterface {
 public:
   ModbusDataFormatter();
   ModbusDataFormatter(const std::map<int, DiscreteInputFlag>&);
@@ -21,7 +21,7 @@ public:
 
 private:
   void SetDiscreteInputFlags(const std::map<int, DiscreteInputFlag>&);
-  
+
   float GetFloatFromInt(uint16_t, uint16_t);
   std::vector<DiscreteInputFlag> discrete_input_flags_; // List of addresses of interest
 };
