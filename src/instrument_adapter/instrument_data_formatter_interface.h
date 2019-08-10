@@ -10,7 +10,6 @@
 
 class InstrumentDataFormatterInterface {
 public:
-  InstrumentDataFormatterInterface(){};
   virtual ~InstrumentDataFormatterInterface(){};
   virtual DataPacket Format(const RawPacket&) = 0;
 };

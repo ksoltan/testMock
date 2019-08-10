@@ -1,7 +1,6 @@
 #include "catch.hpp"
 #include "fakeit.hpp"
 
-#include <iostream>
 #include <map>
 #include <memory>
 #include <vector>

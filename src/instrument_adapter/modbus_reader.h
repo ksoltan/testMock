@@ -12,7 +12,7 @@
 #include "modbus_master_interface.h"
 #include "../common/status.h"
 
-#include "T400_registers.h" // Instrument specific definitions
+#include "../common/T400_registers.h" // Instrument specific definitions
 
 class ModbusReader : InstrumentReaderInterface {
 public:
