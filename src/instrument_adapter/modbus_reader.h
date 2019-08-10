@@ -28,8 +28,8 @@ private:
   void SetDiscreteInputRequestParams(const std::map<int, DiscreteInputFlag>&); // start and num addr
   void SetInputRegisters(const std::vector<int>&);
   void SetDiscreteInputs(const std::map<int, DiscreteInputFlag>&); // Isolate registers from Flags
-  std::vector<int> GetInputRegisterValues();
-  std::vector<int> GetDiscreteInputValues();
+  std::vector<uint16_t> GetInputRegisterValues();
+  std::vector<uint16_t> GetDiscreteInputValues();
   Status GetErrorStatus(uint8_t /*error code*/, String /*msg*/);
 
   std::unique_ptr<ModbusMasterInterface> modbus_master_;

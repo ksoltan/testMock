@@ -15,19 +15,23 @@ ModbusReader::ModbusReader(std::unique_ptr<ModbusMasterInterface> modbus_master,
 }
 
 PacketWithStatus<RawPacket> ModbusReader::Read(){
-  RawPacket raw_packet;
-  std::vector<int> input_register_vals;
-  std::vector<int> discrete_input_vals;
+  std::vector<uint16_t> input_register_vals;
+  std::vector<uint16_t> discrete_input_vals;
   if(input_register_num_addrs_ > 0){ // Request input registers
     uint8_t result = modbus_master_->readInputRegisters(input_register_start_addr_, input_register_num_addrs_);
     if(result != ModbusMasterInterface::ku8MBSuccess){
+      // Return error
       return PacketWithStatus<RawPacket>(GetErrorStatus(result, " on input register read"));
     }
     input_register_vals = GetInputRegisterValues();
   }
   if(discrete_input_num_addrs_ > 0){ // Request discrete inputs
-    modbus_master_->readDiscreteInputs(discrete_input_start_addr_, discrete_input_num_addrs_);
-    input_register_vals = GetDiscreteInputValues();
+    uint8_t result = modbus_master_->readDiscreteInputs(discrete_input_start_addr_, discrete_input_num_addrs_);
+    if(result != ModbusMasterInterface::ku8MBSuccess){
+      // Return error
+      return PacketWithStatus<RawPacket>(GetErrorStatus(result, " on discrete input read"));
+    }
+    discrete_input_vals = GetDiscreteInputValues();
   }
   return PacketWithStatus<RawPacket>(RawPacket(input_register_vals, discrete_input_vals));
 }
@@ -67,8 +71,9 @@ void ModbusReader::SetDiscreteInputs(const std::map<int, DiscreteInputFlag>& dis
   }
 }
 
-std::vector<int> ModbusReader::GetInputRegisterValues(){
-  std::vector<int> values;
+// Retrieve register values from ModbusMaster buffer (Input registers)
+std::vector<uint16_t> ModbusReader::GetInputRegisterValues(){
+  std::vector<uint16_t> values;
   for(auto const& input_register : input_registers_){
     int idx_in_buffer = input_register - input_register_start_addr_;
     values.push_back(modbus_master_->getResponseBuffer(idx_in_buffer));
@@ -77,8 +82,9 @@ std::vector<int> ModbusReader::GetInputRegisterValues(){
   return values;
 }
 
-std::vector<int> ModbusReader::GetDiscreteInputValues(){
-  std::vector<int> values;
+// Retrieve register values from ModbusMaster buffer (Discrete inputs)
+std::vector<uint16_t> ModbusReader::GetDiscreteInputValues(){
+  std::vector<uint16_t> values;
   for(auto const& discrete_input : discrete_inputs_){
     int idx_in_buffer = discrete_input - discrete_input_start_addr_;
     values.push_back(modbus_master_->getResponseBuffer(idx_in_buffer));
@@ -86,6 +92,7 @@ std::vector<int> ModbusReader::GetDiscreteInputValues(){
   return values;
 }
 
+// Return a Status with msg corresponding to the ModbusMaster error
 Status ModbusReader::GetErrorStatus(uint8_t error_code, String msg){
   switch (error_code) {
     case ModbusMasterInterface::ku8MBIllegalFunction:

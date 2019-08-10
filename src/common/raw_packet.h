@@ -9,10 +9,10 @@
 #include <vector>
 
 struct RawPacket {
-  std::vector<int> input_register_vals;
-  std::vector<int> discrete_input_vals;
+  std::vector<uint16_t> input_register_vals;
+  std::vector<uint16_t> discrete_input_vals;
 
-  RawPacket(std::vector<int> input_vals = {}, std::vector<int> discrete_vals = {})
+  RawPacket(std::vector<uint16_t> input_vals = {}, std::vector<uint16_t> discrete_vals = {})
       : input_register_vals(input_vals), discrete_input_vals(discrete_vals) {}
 
   bool operator==(const RawPacket& other) const {
