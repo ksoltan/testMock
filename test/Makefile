@@ -30,7 +30,7 @@ SRC      := $(wildcard include/*.cpp)			\
 						$(wildcard ../src/common/*.cpp)		\
 						$(wildcard ../src/data_processor/*.cpp)		\
 						$(wildcard ../src/instrument_adapter/*.cpp)	\
-						$(wildcard ../src/*.cpp)
+						$(wildcard run/*.cpp) # To run program locally
 endif
 
 # OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)

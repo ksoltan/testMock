@@ -1,32 +1,31 @@
 /** File: TIK_V0.cpp
  *
 **/
-#include <memory>
 #include <iostream>
+#include <memory>
 
 #include "Particle.h"
-// For local compile (defined in main.cpp when running tests)
 FakeParticle Particle;
 FakeTime Time;
 
 SerialPort Serial;
 SerialPort Serial1;
 
-#include "common/data_packet.h"
-#include "common/packet_with_status.h"
-// #include "data_processor/annotater_interface.h"
-// // #include "data_processor/cloud_writer.h"
-// #include "data_processor/data_processor_impl.h"
-// #include "data_processor/outputter_impl.h"
-// #include "data_processor/serial_writer.h"
-// // #include "data_processor/sd_writer.h"
-// #include "data_processor/timestamp_annotater.h"
-// #include "data_processor/writer_interface.h"
-#include "instrument_adapter/instrument_adapter_impl.h"
-#include "instrument_adapter/modbus_data_formatter.h"
-#include "instrument_adapter/modbus_master.h"
-#include "instrument_adapter/modbus_reader.h"
-#include "common/T400_registers.h"
+#include "../../src/common/data_packet.h"
+#include "../../src/common/packet_with_status.h"
+// #include "../../src/data_processor/annotater_interface.h"
+// // #include "../../src/data_processor/cloud_writer.h"
+// #include "../../src/data_processor/data_processor_impl.h"
+// #include "../../src/data_processor/outputter_impl.h"
+// #include "../../src/data_processor/serial_writer.h"
+// // #include "../../src/data_processor/sd_writer.h"
+// #include "../../src/data_processor/timestamp_annotater.h"
+// #include "../../src/data_processor/writer_interface.h"
+#include "../../src/instrument_adapter/instrument_adapter_impl.h"
+#include "../../src/instrument_adapter/modbus_data_formatter.h"
+#include "../../src/instrument_adapter/modbus_master.h"
+#include "../../src/instrument_adapter/modbus_reader.h"
+#include "../../src/common/T400_registers.h"
 
 // SYSTEM_MODE(MANUAL);
 

@@ -1,6 +1,6 @@
 #include "modbus_reader.h"
 #include "Particle.h"
-#include <iostream>
+// #include <iostream>
 ModbusReader::ModbusReader(std::unique_ptr<ModbusMasterInterface> modbus_master){
   modbus_master_ = std::move(modbus_master);
   SetInputRegisterRequestParams(INPUT_REGISTERS);
@@ -18,7 +18,7 @@ ModbusReader::ModbusReader(std::unique_ptr<ModbusMasterInterface> modbus_master,
 PacketWithStatus<RawPacket> ModbusReader::Read(){
   std::vector<uint16_t> input_register_vals;
   std::vector<uint16_t> discrete_input_vals;
-  std::cout << "Attempting to read" << std::endl;
+  // std::cout << "Attempting to read" << std::endl;
   if(input_register_num_addrs_ > 0){ // Request input registers
     uint8_t result = modbus_master_->readInputRegisters(input_register_start_addr_, input_register_num_addrs_);
     if(result != ModbusMasterInterface::ku8MBSuccess){
