@@ -29,15 +29,15 @@ Status CloudWriter::Write(){
   data_packets_.clear(); // Clear packets
 
   if(num_failed > 0){ // Return number of packets failed in error msg
-    // return Status::WriteFailed(" at Cloud Writer with " + \
-    //                             std::to_string(num_failed) + "/" + \
-    //                             std::to_string(options_.num_packets_per_batch) + \
-    //                             " packets");
-    // FOR PARTICLE COMPILE
     return Status::WriteFailed(" at Cloud Writer with " + \
-                                String(num_failed) + "/" + \
-                                String(options_.num_packets_per_batch) + \
+                                std::to_string(num_failed) + "/" + \
+                                std::to_string(options_.num_packets_per_batch) + \
                                 " packets");
+    // FOR PARTICLE COMPILE
+    // return Status::WriteFailed(" at Cloud Writer with " + \
+    //                             String(num_failed) + "/" + \
+    //                             String(options_.num_packets_per_batch) + \
+    //                             " packets");
   }
   return Status::OK();
 }

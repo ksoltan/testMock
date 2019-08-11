@@ -1,5 +1,4 @@
 # Makefile for Running Unit Tests
-
 CXX      := g++
 CXXFLAGS := -pedantic-errors -Wall -Wextra -Wno-unused-parameter -Wno-return-type #-Werror
 LDFLAGS  := -L/usr/lib -lstdc++ -lm
@@ -7,20 +6,32 @@ LDFLAGS  := -L/usr/lib -lstdc++ -lm
 BUILD    := ./build
 OBJ_DIR  := $(BUILD)/obj
 APP_DIR  := $(BUILD)
+ifeq ($(TEST), true)
 TARGET   := allTests
+else
+TARGET   := main
+endif
 
 INCLUDE  := -I include/ 									\
 						-I ../src/common/		\
 						-I ../src/data_processor/		\
 						-I ../src/instrument_adapter		\
-
-SRC      := $(wildcard *.cpp)							\
-						$(wildcard include/*.cpp)			\
-						$(wildcard unit/data_processor/*.cpp)	\
-						$(wildcard unit/instrument_adapter/*.cpp)	\
+# SRC =
+ifeq ($(TEST), true)
+SRC      := $(wildcard include/*.cpp)			\
 						$(wildcard ../src/common/*.cpp)		\
 						$(wildcard ../src/data_processor/*.cpp)		\
 						$(wildcard ../src/instrument_adapter/*.cpp)	\
+						$(wildcard unit/data_processor/*.cpp)	\
+						$(wildcard unit/instrument_adapter/*.cpp)	\
+						$(wildcard *.cpp)
+else
+SRC      := $(wildcard include/*.cpp)			\
+						$(wildcard ../src/common/*.cpp)		\
+						$(wildcard ../src/data_processor/*.cpp)		\
+						$(wildcard ../src/instrument_adapter/*.cpp)	\
+						$(wildcard ../src/*.cpp)
+endif
 
 # OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 OBJECTS := $(patsubst %.c,%.o,$(SRC))

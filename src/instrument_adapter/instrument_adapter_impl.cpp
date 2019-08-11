@@ -1,5 +1,5 @@
 #include "instrument_adapter_impl.h"
-
+#include <iostream>
 InstrumentAdapterImpl::InstrumentAdapterImpl(std::unique_ptr<InstrumentReaderInterface> reader,
                   std::unique_ptr<InstrumentDataFormatterInterface> formatter){
   reader_ = std::move(reader);
@@ -8,6 +8,7 @@ InstrumentAdapterImpl::InstrumentAdapterImpl(std::unique_ptr<InstrumentReaderInt
 
 PacketWithStatus<DataPacket> InstrumentAdapterImpl::GetDataFromInstrument(){
   PacketWithStatus<RawPacket> raw_packet = reader_->Read();
+  std::cout << "Read raw packet!" << std::endl;
   if(raw_packet.status.NotOK()){
     return PacketWithStatus<DataPacket>(raw_packet.status);
   }

@@ -7,6 +7,9 @@ include/ - unit testing and mock framework headers (catch, fakeit)
 unit/ - unit tests
 
 To run tests, from test/ folder:
-$ make && ./build/allTests
+$ make TEST=true && ./build/allTests
+
+To run main file, from test/ folder:
+$ make && ./build/main
 
 The Makefile is a slight mess. Consider changing to bazel in the future.

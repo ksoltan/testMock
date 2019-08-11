@@ -59,8 +59,8 @@ String ModbusDataFormatter::FormatDiscreteInputs(const std::vector<uint16_t>& di
     int flag = (discrete_input_vals[i] == 0) ? 0 : 1;
     combined_flag |= flag << flag_shift;
   }
-  // return std::to_string(combined_flag);
-  return String(combined_flag); // FOR PARTICLE COMPILE
+  return std::to_string(combined_flag);
+  // return String(combined_flag); // FOR PARTICLE COMPILE
 }
 
 void ModbusDataFormatter::SetDiscreteInputFlags(const std::map<int, DiscreteInputFlag>& discrete_inputs_map){
