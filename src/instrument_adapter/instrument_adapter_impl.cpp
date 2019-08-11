@@ -1,5 +1,4 @@
 #include "instrument_adapter_impl.h"
-// #include <iostream>
 
 InstrumentAdapterImpl::InstrumentAdapterImpl(std::unique_ptr<InstrumentReaderInterface> reader,
                   std::unique_ptr<InstrumentDataFormatterInterface> formatter){
@@ -8,9 +7,9 @@ InstrumentAdapterImpl::InstrumentAdapterImpl(std::unique_ptr<InstrumentReaderInt
 }
 
 PacketWithStatus<DataPacket> InstrumentAdapterImpl::GetDataFromInstrument(){
-  // std::cout << "Preparing to read data off instrument" << std::endl;
+  Serial.println("Getting data from instrument.");
   PacketWithStatus<RawPacket> raw_packet = reader_->Read();
-  // std::cout << "Read raw packet!" << std::endl;
+  Serial.println("Finished READ.");
   if(raw_packet.status.NotOK()){
     return PacketWithStatus<DataPacket>(raw_packet.status);
   }

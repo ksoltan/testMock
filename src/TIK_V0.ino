@@ -20,7 +20,7 @@
 #include "instrument_adapter/modbus_reader.h"
 #include "common/T400_registers.h"
 
-// SYSTEM_MODE(MANUAL);
+SYSTEM_MODE(MANUAL);
 
 std::unique_ptr<ModbusMaster> modbus_master(new ModbusMaster(1)); // successful
 std::unique_ptr<ModbusReader> reader;
@@ -29,13 +29,20 @@ std::unique_ptr<InstrumentAdapterImpl> adapter;
 
 void setup(){
   Serial.begin(9600);
+  modbus_master->begin(57600);
   reader = std::make_unique<ModbusReader>(std::move(modbus_master));
   data_formatter = std::make_unique<ModbusDataFormatter>();
   adapter = std::make_unique<InstrumentAdapterImpl>(std::move(reader), std::move(data_formatter));
+  delay(20000);
+  Serial.println("Beggining run");
 }
 
 void loop(){
   Serial.println("YO");
+  digitalWrite(D7, HIGH);
+  adapter->GetDataFromInstrument();
+  digitalWrite(D7, LOW);
+  delay(1000);
 }
 
 // // // Instrument Adapter

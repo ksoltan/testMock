@@ -16,11 +16,14 @@ ModbusReader::ModbusReader(std::unique_ptr<ModbusMasterInterface> modbus_master,
 }
 
 PacketWithStatus<RawPacket> ModbusReader::Read(){
+  Serial.println("Called modbus READ.");
   std::vector<uint16_t> input_register_vals;
   std::vector<uint16_t> discrete_input_vals;
-  // std::cout << "Attempting to read" << std::endl;
+  Serial.println("Init empty vecs.");
   if(input_register_num_addrs_ > 0){ // Request input registers
+    Serial.println("Calling modbus master read input regs");
     uint8_t result = modbus_master_->readInputRegisters(input_register_start_addr_, input_register_num_addrs_);
+    Serial.println("Check successful modbus master transaction");
     if(result != ModbusMasterInterface::ku8MBSuccess){
       // Return error
       return PacketWithStatus<RawPacket>(GetErrorStatus(result, " on input register read"));
