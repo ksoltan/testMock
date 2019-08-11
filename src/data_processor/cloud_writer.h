@@ -13,12 +13,12 @@
 class CloudWriter : public WriterInterface {
 public:
   struct Options {
-    int num_packets_per_batch;
+    unsigned int num_packets_per_batch;
     String event_name; // topic to Particle.Publish to
   };
   CloudWriter(const Options&);
   Status AddDataPacket(const DataPacket&); // Batch and publish if enough
-  int GetNumPacketsInBatch(); // For testing
+  unsigned int GetNumPacketsInBatch(); // For testing
 
 private:
   Options options_;

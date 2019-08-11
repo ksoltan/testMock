@@ -59,8 +59,11 @@ String ModbusDataFormatter::FormatDiscreteInputs(const std::vector<uint16_t>& di
     int flag = (discrete_input_vals[i] == 0) ? 0 : 1;
     combined_flag |= flag << flag_shift;
   }
-  return std::to_string(combined_flag);
-  // return String(combined_flag); // FOR PARTICLE COMPILE
+  char buf[4]; // 4 is max bytes to record uint8_t
+  // Particle String class has function for stringifying float with set precision
+  // Using snprintf because wasn't able to mock String class for unit testing
+  snprintf(buf, sizeof(buf), "%d", combined_flag);
+  return buf;
 }
 
 void ModbusDataFormatter::SetDiscreteInputFlags(const std::map<int, DiscreteInputFlag>& discrete_inputs_map){

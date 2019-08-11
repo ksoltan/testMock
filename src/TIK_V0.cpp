@@ -43,6 +43,7 @@ void setup(){
 }
 
 int main(){ // FOR PARTICLE COMPILE: void loop()
+  setup();
   while(true){
     for(auto const& s: DISCRETE_INPUTS_MAP){
       std::cout << s.first << " : " << s.second << std::endl;

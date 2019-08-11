@@ -13,13 +13,13 @@ Status CloudWriter::AddDataPacket(const DataPacket& packet){
   return Status::OK();
 }
 
-int CloudWriter::GetNumPacketsInBatch(){
+unsigned int CloudWriter::GetNumPacketsInBatch(){
   return data_packets_.size();
 }
 
 Status CloudWriter::Write(){
   // initialize explicitly to prevent undefined behavior: https://stackoverflow.com/a/6032889
-  int num_failed = 0;
+  unsigned int num_failed = 0;
   for(auto const& packet : data_packets_){
     bool publish_flag = Particle.publish(options_.event_name, packet.ToString());
     if(!publish_flag){
@@ -29,15 +29,10 @@ Status CloudWriter::Write(){
   data_packets_.clear(); // Clear packets
 
   if(num_failed > 0){ // Return number of packets failed in error msg
-    return Status::WriteFailed(" at Cloud Writer with " + \
-                                std::to_string(num_failed) + "/" + \
-                                std::to_string(options_.num_packets_per_batch) + \
-                                " packets");
-    // FOR PARTICLE COMPILE
-    // return Status::WriteFailed(" at Cloud Writer with " + \
-    //                             String(num_failed) + "/" + \
-    //                             String(options_.num_packets_per_batch) + \
-    //                             " packets");
+    // 12 is max num of chars to represent an uint, 31 is num of chars of rest of msg with slash
+    char buf_msg[2*12 + 31];
+    snprintf(buf_msg, sizeof(buf_msg), " at Cloud Writer with %u/%u packets", num_failed, options_.num_packets_per_batch);
+    return Status::WriteFailed(buf_msg);
   }
   return Status::OK();
 }

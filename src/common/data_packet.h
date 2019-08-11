@@ -9,7 +9,6 @@
 #define data_packet_h
 
 #include "Particle.h" // Required for String library def
-
 struct DataPacket {
   String data;
   String timestamp;
