@@ -23,6 +23,7 @@ This repository contains firmware that creates a general architecture for:
   
 
 # The Architecture
+There are two independent parts to the program: an InstrumentAdapter that handles the communication with the instrument and a DataProcessor that handles sending, annotating, and writing packets of data. The main .ino files connects these two.
 ![](media/data_flow_diagram.png)
 
 ## The InstrumentAdapter
