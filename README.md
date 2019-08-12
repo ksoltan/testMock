@@ -9,12 +9,24 @@ This repository contains firmware that creates a general architecture for:
 # The Architecture
 ![](media/data_flow_diagram.png)
 
+## The InstrumentAdapter
+The InstrumentAdapter has a Reader and DataFormatter. The Reader will return a RawPacket of data received directly from an instrument, along with a Status. If the Status is OK, the InstrumentAdapter calls the DataFormatter to convert the RawPacket into the common DataPacket type (which all members of DataProcessor use). A DataPacket's data field is a comma-separated string.
+
+If the Reader returns with an error, the InstrumentAdapter converts the error into a DataPacket, writing the error msg as the data field, propagating the Status and error msg for the DataProcessor to handle.
+
+## The DataProcessor and Outputter
+The DataProcessor will receive a raw data packet and annotate it. If the original packet only contained an error (non-OK status), it will output it as an error packet. If the original packet has an OK status, it will output it as a normal packet.
+
+The Outputter has two functions. Output(DataPacket) will send a data packet to all added writers. Usually, these writers will batch data packets and actually write them less frequently then they receive packets. The outputter then returns a list of Statuses, whether each writer successfully wrote the packet, and if not, what error it returned.
+
+If the outputter returns non-OK statuses, the DataProcessor will follow up by sending out error packets. OutputError(DataPacket) will send a data packet (where the data is an error msg) to all added error writers. These writers can be configured to have a batch number of 1 so they will write the packet as soon as they receive it. No status is returned, since if writing an error fails, there is nowhere else that can take care of it.
+
 # Adding Instrument
 The current firmware was being tested on a Teledyne T400 instrument which uses Modbus RTC over RS232 (Serial).
 
 ## Adding Instrument Using Modbus
 To configure the firmware to work with a Modbus instrument:
-1. Update T400_register.h (TODO: rename this file) with the appropriate input registers and discrete input registers.
+1. Update T400_register.h (TODO: rename this file) with the appropriate input registers and discrete input registers. Don't forget to add your fields to the SD_FILE_HEADER_STR field.
 2. Adjust the read rate in TIK_V0.ino (TODO: move to a separate config header file).
 3. Adjust the baud_rate for ModbusMaster in TIK_V0.ino. __Note: The max baud rate for ModbusMaster on Argon is 57600. 115200 results in an invalid Modbus transaction.__
 
