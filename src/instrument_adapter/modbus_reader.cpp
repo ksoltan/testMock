@@ -1,6 +1,6 @@
 #include "modbus_reader.h"
 #include "Particle.h"
-// #include <iostream>
+
 ModbusReader::ModbusReader(std::unique_ptr<ModbusMasterInterface> modbus_master){
   modbus_master_ = std::move(modbus_master);
   SetInputRegisterRequestParams(INPUT_REGISTERS);
@@ -16,14 +16,10 @@ ModbusReader::ModbusReader(std::unique_ptr<ModbusMasterInterface> modbus_master,
 }
 
 PacketWithStatus<RawPacket> ModbusReader::Read(){
-  Serial.println("Called modbus READ.");
   std::vector<uint16_t> input_register_vals;
   std::vector<uint16_t> discrete_input_vals;
-  Serial.println("Init empty vecs.");
   if(input_register_num_addrs_ > 0){ // Request input registers
-    Serial.println("Calling modbus master read input regs");
     uint8_t result = modbus_master_->readInputRegisters(input_register_start_addr_, input_register_num_addrs_);
-    Serial.println("Check successful modbus master transaction");
     if(result != ModbusMasterInterface::ku8MBSuccess){
       // Return error
       return PacketWithStatus<RawPacket>(GetErrorStatus(result, " on input register read"));
@@ -71,7 +67,6 @@ void ModbusReader::SetInputRegisters(const std::vector<int>& input_registers){
 }
 
 void ModbusReader::SetDiscreteInputs(const std::map<int, DiscreteInputFlag>& discrete_inputs_map){
-  Serial.println("Setting discrete inputs");
   for(auto const& discrete_input : discrete_inputs_map){
     Serial.printf("%d : %d\n", discrete_input.first, discrete_input.second);
     discrete_inputs_.push_back(discrete_input.first); // Add just the address

@@ -263,7 +263,6 @@ serial ports, etc. is permitted within callback function.
 */
 void ModbusMaster::idle(void (*idle)())
 {
-  Serial.println("In idle function");
   _idle = idle;
 }
 
@@ -650,7 +649,6 @@ Sequence:
 */
 uint8_t ModbusMaster::ModbusMasterTransaction(uint8_t u8MBFunction)
 {
-  Serial.println("Inside Transaction");
   uint8_t u8ModbusADU[256];
   uint8_t u8ModbusADUSize = 0;
   uint8_t i, u8Qty;
@@ -742,7 +740,6 @@ uint8_t ModbusMaster::ModbusMasterTransaction(uint8_t u8MBFunction)
       u8ModbusADU[u8ModbusADUSize++] = lowByte(_u16TransmitBuffer[1]);
       break;
   }
-  Serial.println("Appending CRC");
   // append CRC
   u16CRC = 0xFFFF;
   for (i = 0; i < u8ModbusADUSize; i++)
@@ -761,20 +758,16 @@ uint8_t ModbusMaster::ModbusMasterTransaction(uint8_t u8MBFunction)
 
   u8ModbusADUSize = 0;
   MBSerial.flush();
-  Serial.println("Flushed request");
   // loop until we run out of time or bytes, or an error occurs
   u32StartTime = millis();
   while (u8BytesLeft && !u8MBStatus)
   {
-    Serial.printf("Enter loop with %u bytes left\n", u8BytesLeft);
     if (MBSerial.available())
     {
-      Serial.println("Serial available");
 #if __MODBUSMASTER_DEBUG__
       digitalWrite(4, true);
 #endif
       u8ModbusADU[u8ModbusADUSize++] = MBSerial.read();
-      Serial.println("Serial read");
       u8BytesLeft--;
 #if __MODBUSMASTER_DEBUG__
       digitalWrite(4, false);
@@ -782,30 +775,23 @@ uint8_t ModbusMaster::ModbusMasterTransaction(uint8_t u8MBFunction)
     }
     else
     {
-      Serial.println("Serial unavailable");
 #if __MODBUSMASTER_DEBUG__
       digitalWrite(5, true);
 #endif
-      Serial.println("To idle or not to idle?");
       if (_idle)
       {
-        Serial.println("Idling?");
-        // _idle();
-        Serial.println("Done idling");
+        // _idle(); // Function never intialized if MB.Serial not available. Invalid pointer error.
       }
 #if __MODBUSMASTER_DEBUG__
       digitalWrite(5, false);
 #endif
-    Serial.println("Exiting loop");
     }
-    Serial.println("Evaluating SLAVE ID, function code");
     // evaluate slave ID, function code once enough bytes have been read
     if (u8ModbusADUSize == 5)
     {
       // verify response is for correct Modbus slave
       if (u8ModbusADU[0] != _u8MBSlave)
       {
-        Serial.printf("Slave repsonse id = %i\n", u8ModbusADU[0]);
         u8MBStatus = ku8MBInvalidSlaveID;
         break;
       }
@@ -813,7 +799,6 @@ uint8_t ModbusMaster::ModbusMasterTransaction(uint8_t u8MBFunction)
       // verify response is for correct Modbus function code (mask exception bit 7)
       if ((u8ModbusADU[1] & 0x7F) != u8MBFunction)
       {
-        Serial.printf("Function code = %i vs my code = %i\n", u8ModbusADU[1], u8MBFunction);
         u8MBStatus = ku8MBInvalidFunction;
         break;
       }
@@ -850,7 +835,7 @@ uint8_t ModbusMaster::ModbusMasterTransaction(uint8_t u8MBFunction)
     }
     if (millis() > (u32StartTime + ku8MBResponseTimeout))
     {
-      Serial.printf("\nTimeout = %d", ku8MBResponseTimeout);
+      Serial.printf("\nTimeout = %d\n", ku8MBResponseTimeout);
       u8MBStatus = ku8MBResponseTimedOut;
     }
   }

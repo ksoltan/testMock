@@ -13,7 +13,11 @@
 // Serial class for Modbus Master
 #include "fake_serial.h"
 
+#define D7 7
+#define INPUT	0
 #define OUTPUT	1
+#define LOW	0
+#define HIGH	1
 
 // Functions below are defined in Particle.cpp to prevent multiple redefinitions
 void pinMode(int pin, int mode);

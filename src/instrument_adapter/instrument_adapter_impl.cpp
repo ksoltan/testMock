@@ -7,9 +7,7 @@ InstrumentAdapterImpl::InstrumentAdapterImpl(std::unique_ptr<InstrumentReaderInt
 }
 
 PacketWithStatus<DataPacket> InstrumentAdapterImpl::GetDataFromInstrument(){
-  Serial.println("Getting data from instrument.");
   PacketWithStatus<RawPacket> raw_packet = reader_->Read();
-  Serial.println("Finished READ.");
   if(raw_packet.status.NotOK()){
     return PacketWithStatus<DataPacket>(raw_packet.status);
   }
