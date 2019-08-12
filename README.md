@@ -44,14 +44,14 @@ The current firmware was being tested on a Teledyne T400 instrument which uses M
 To configure the firmware to work with a Modbus instrument:
 1. Update T400_register.h (TODO: rename this file) with the appropriate input registers and discrete input registers. Don't forget to add your fields to the SD_FILE_HEADER_STR field.
 2. Adjust the read rate in TIK_V0.ino (TODO: move to a separate config header file).
-3. Adjust the baud_rate for ModbusMaster in TIK_V0.ino. __Note: The max baud rate for ModbusMaster on Argon is 57600. 115200 results in an invalid Modbus transaction.__
+3. Adjust the baud_rate for ModbusMaster in TIK_V0.ino. _Note: The max baud rate for ModbusMaster on Argon is 57600. 115200 results in an invalid Modbus transaction._
 
 ## Adding Other Instrument
 To configure the firmware to work with a different protocol:
 1. Modify the RawPacket class by adding the fields that you need.
 2. Extend the InstrumentReaderInterface class. Your class must contain a Read() function that returns a PacketWithStatus with a RawPacket.
 3. Extend the InstrumentDataFormatterInterface class. Your class must contain a Format() function that transforms a RawPacket into a DataPacket.
-4. Update the __reader__ and __data_formatter__ unique_ptr in the main .ino file to initialize as members of your new classes.
+4. Update the _reader_ and _data_formatter_ unique_ptr in the main .ino file to initialize as members of your new classes.
 
 # Adding Writer
 Writers are data output methods. The current firmware has a Serial Writer which simply prints the packet or error to the serial monitor and a CloudWriter which hasn't been tested on a device, but was mocked and unittested (please update if necessary). There is also a sketch for an SD Writer without an implementation.
@@ -61,7 +61,7 @@ To add a writer to the program:
 1. In the main .ino file, initialize a unique_ptr to the desired reader.
 2. You may need to pass an Options struct to the Writer. For example, for a Cloud Writer, set the batch number to 5 so it sends the data 5 packets at a time. For an Error Writer, set the batch number to 1 so it writes the data as soon as it receives it.
 3. In setup(), call `outputter.AddWriter(std::move(your_writer_unique_ptr));`
-4. If you want to configure the writer as an error writer, call `outputter.AddErrorWriter(std::move(your_writer_unique_ptr));``
+4. If you want to configure the writer as an error writer, call `outputter.AddErrorWriter(std::move(your_writer_unique_ptr));`
 
 ## Adding Custom Writer
 To add a custom writer:
