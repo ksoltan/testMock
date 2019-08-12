@@ -7,7 +7,7 @@
 #include "common/data_packet.h"
 #include "common/packet_with_status.h"
 #include "data_processor/annotater_interface.h"
-// #include "data_processor/cloud_writer.h"
+#include "data_processor/cloud_writer.h"
 #include "data_processor/data_processor_impl.h"
 #include "data_processor/outputter_impl.h"
 #include "data_processor/serial_writer.h"
@@ -20,7 +20,7 @@
 #include "instrument_adapter/modbus_reader.h"
 #include "common/T400_registers.h"
 
-SYSTEM_MODE(MANUAL);
+// SYSTEM_MODE(MANUAL);
 // Instrument Adapter
 std::unique_ptr<ModbusMaster> modbus_master(new ModbusMaster(1)); // Use Serial1 for modbus
 std::unique_ptr<ModbusReader> reader;
@@ -32,6 +32,7 @@ std::unique_ptr<DataProcessorImpl> data_processor;
 std::unique_ptr<TimestampAnnotater> timestamp_annotater;
 std::unique_ptr<OutputterImpl> outputter;
 std::unique_ptr<SerialWriter> serial_writer;
+std::unique_ptr<CloudWriter> cloud_writer;
 std::unique_ptr<SerialWriter> error_serial_writer;
 
 enum State{
@@ -55,14 +56,22 @@ void setup(){
   adapter = std::make_unique<InstrumentAdapterImpl>(std::move(reader), std::move(data_formatter));
   // Data Processor
   timestamp_annotater = std::make_unique<TimestampAnnotater>();
+
   outputter = std::make_unique<OutputterImpl>();
   serial_writer = std::make_unique<SerialWriter>();
   outputter->AddWriter(std::move(serial_writer));
   error_serial_writer = std::make_unique<SerialWriter>();
   outputter->AddErrorWriter(std::move(error_serial_writer));
+
+  CloudWriter::Options options;
+  options.num_packets_per_batch = 3;
+  options.event_name = "DATA_T400";
+  cloud_writer = std::make_unique<CloudWriter>(options);
+  outputter->AddWriter(std::move(cloud_writer));
+
   data_processor = std::make_unique<DataProcessorImpl>(std::move(timestamp_annotater), std::move(outputter));
   timer.start();
-  delay(20000); // Wait 20 seconds to allow particle serial monitor to connect for debugging
+  delay(10000); // Wait 10 seconds to allow particle serial monitor to connect for debugging
 }
 
 void loop(){
