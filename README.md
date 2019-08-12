@@ -15,7 +15,7 @@ This repository contains firmware that creates a general architecture for:
   - [Adding Instrument Using Modbus](#adding-instrument-using-modbus)
   - [Adding Other Instrument](#adding-other-instrument)
 - [Adding Writer](#adding-writer)
-  - [Adding Writer to Main Program](#adding-writers-to-main-program)
+  - [Adding Writer to Main Program](#adding-writer-to-main-program)
   - [Adding Custom Writer](#adding-custom-writer)
 - [Tests](#tests)
   - [Running Unit Tests](#running-unit-tests)
