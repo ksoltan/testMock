@@ -7,6 +7,21 @@ This repository contains firmware that creates a general architecture for:
 - writing the data to an SD card
 - logging errors to the cloud and SD card
 
+# Contents:
+- [The Architecture](#the-architecture)
+  - [The InstrumentAdapter](#the-instrumentadapter)
+  - [The DataProcessor](#the-dataprocessor)
+- [Adding Instrument](#adding-instrument)
+  - [Adding Instrument Using Modbus](#adding-instrument-using-modbus)
+  - [Adding Other Instrument](#adding-other-instrument)
+- [Adding Writer](#adding-writer)
+  - [Adding Writer to Main Program](#adding-writers-to-main-program)
+  - [Adding Custom Writer](#adding-custom-writer)
+- [Tests](#tests)
+  - [Running Unit Tests](#running-unit-tests)
+  - [Running Local Build](#running-local-build)
+  
+
 # The Architecture
 ![](media/data_flow_diagram.png)
 
@@ -15,7 +30,7 @@ The InstrumentAdapter has a Reader and DataFormatter. The Reader will return a R
 
 If the Reader returns with an error, the InstrumentAdapter converts the error into a DataPacket, writing the error msg as the data field, propagating the Status and error msg for the DataProcessor to handle.
 
-## The DataProcessor and Outputter
+## The DataProcessor
 The DataProcessor will receive a raw data packet and annotate it. If the original packet only contained an error (non-OK status), it will output it as an error packet. If the original packet has an OK status, it will output it as a normal packet.
 
 The Outputter has two functions. Output(DataPacket) will send a data packet to all added writers. Usually, these writers will batch data packets and actually write them less frequently then they receive packets. The outputter then returns a list of Statuses, whether each writer successfully wrote the packet, and if not, what error it returned.
@@ -38,10 +53,10 @@ To configure the firmware to work with a different protocol:
 3. Extend the InstrumentDataFormatterInterface class. Your class must contain a Format() function that transforms a RawPacket into a DataPacket.
 4. Update the __reader__ and __data_formatter__ unique_ptr in the main .ino file to initialize as members of your new classes.
 
-# Adding Writers (Output methods)
-The current firmware has a Serial Writer which simply prints the packet or error to the serial monitor and a CloudWriter which hasn't been tested on a device, but was mocked and unittested (please update if necessary). There is also a sketch for an SD Writer without an implementation.
+# Adding Writer
+Writers are data output methods. The current firmware has a Serial Writer which simply prints the packet or error to the serial monitor and a CloudWriter which hasn't been tested on a device, but was mocked and unittested (please update if necessary). There is also a sketch for an SD Writer without an implementation.
 
-## Adding Writer to the Main Program
+## Adding Writer to Main Program
 To add a writer to the program:
 1. In the main .ino file, initialize a unique_ptr to the desired reader.
 2. You may need to pass an Options struct to the Writer. For example, for a Cloud Writer, set the batch number to 5 so it sends the data 5 packets at a time. For an Error Writer, set the batch number to 1 so it writes the data as soon as it receives it.
@@ -53,13 +68,16 @@ To add a custom writer:
 1. Extend the WriterInterface class. It should contain a AddDataPacket class.
 2. Add the writer to the main program (steps above).
 
-# To Run Tests
+# Tests
+Tests are built using the Catch2 unittest framework and the Fakeit mocking framework.
+
+## Running Unit Tests
 From the test/ folder, run the command:
 ```
 $ make TEST=true && ./build/allTests
 ```
 
-# To Run a Local build
+## Running Local Build
 The test/run/ folder contains an example sketch modified to compile locally (there are a few Particle defined functions I wasn't able to mock).
 From the test/ folder, run the command:
 ```
