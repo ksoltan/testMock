@@ -1,4 +1,5 @@
-# TIK-boron (which really needs a new name)
+# TIK-boron
+#### (really needs a new name. TIK = Teledyne Instrument Kit, nifty, but very constraining in the instrument vendors we want to reach :))
 This repository contains firmware that creates a general architecture for:
 - connecting a reference instrument to a Particle device
 - adding metadata such as time or geo-location to a data packet
